@@ -1,0 +1,1 @@
+module.exports = !!document.createElement('video').canPlayType('application/x-mpegURL')
