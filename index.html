@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>MAMA2-妈妈再也不用担心我的macbook发热了计划2</title>
+	<style>
+		*{margin:0; padding:0;}
+		body {background: #FDF9F9; font-family: "PingHei","Lucida Grande", "Lucida Sans Unicode", "STHeiti", "Helvetica","Arial","Verdana","sans-serif"; font-size:16px;}
+		.frame{width: 720px; margin:0 auto 30px;}
+		.main {text-align:center;padding-top: 50px;}
+		.main h1 {padding: 20px 0 40px;letter-spacing:-2px;}
+		.card { border-radius: 3px;box-shadow: 0 0 2px rgba(0,0,0,0.4); background: #ffffff;margin:0 100px;padding:20px;}
+		p {line-height: 28px; text-align: left; }
+		p .first-letter {font-size: 60px;float:left;vertical-align:top;margin:10px;font-weight: bold;}
+		.main ul li{list-style-type: none; color: #DF6558; text-align: left; width: 300px; margin: 10px auto; font-weight: bold;}
+		.main ul li span {float:right;}
+		.main ul li span:before {content: "@";}
+		hr {height:0; border:0; border-top: 1px solid rgba(0,0,0,0.1); margin: 10px 5px;}
+		.text-left { text-align: left; }
+		.text-center { text-align: center; }
+		.text-title { font-size: 20px; font-weight:bold;}
+		.text-margin { margin-right: 20px; }
+		.bookmarklet-icon { text-decoration: none; }
+		.bookmarklet-icon span {display: none;}
+		.bookmarklet-icon:before {content: "<bookmarklet/>"; color: #DF6558; font-weight: bold; padding: 10px 15px; display: inline-block; margin: 10px; border-radius: 10px; border: 2px solid #DF6558; font-size: 22px; }
+		.bookmarklet-icon.dev:before {content: "<bookmarklet dev=1/>";}
+		.disable {opacity: 0.2; }
+		.bg-gray {background: #eeeeee; }
+		.text-gray {color:#999999;}
+		.image {padding:5px;background:#fff;box-shadow:0 0 2px rgba(0,0,0,0.5);border-radius:2px;margin:10px auto;display:block;}
+		.link {text-decoration: none; background: #eeeeee; color:#333333; padding:2px 5px;box-shadow: 0 0 2px rgba(0,0,0,0.1); border-radius: 2px;border:1px solid rgba(0,0,0,0.2);}
+	</style>
+</head>
+<body>
+	<div class="frame main">
+		<img src="./images/mama2.png" alt="">
+		<h1 class="text-gray">
+			妈妈再也不用担心我的macbook发热了计划2
+		</h1>
+		<div class="card">
+			<p>
+				<span class="first-letter">妈</span>妈计划用于解决在看视频网站时macbook发热严重的问题。使用video来替换原来的flash播放器。
+			</p>
+			<hr>
+			<p class="text-center">目前网站支持列表:</p>
+			<ul>
+				<li><span>朱一</span>哔哩哔哩弹幕视频网</li>
+				<li><span>朱一</span>优酷-中国领先视频网站</li>
+				<li><span>朱一</span>土豆-每个人都是生活的导演</li>
+			</ul>
+		</div>
+	</div>
+	<div class="frame">
+		<div class="card">
+			<p class="text-center text-title">使用 收藏夹脚本</p>
+			<hr>
+			<p class="text-center">拖拽下面图标到收藏夹</p>
+			<p class="text-center"><a class="bookmarklet-icon" href="javascript:void(function(s){s=document.body.appendChild(document.createElement('script'));s.src='http://localhost:8000/index.js?ts='+Date.now();s.charset='UTF-8';}())"><span>MAMA2</span></a></p>
+		</div>
+	</div>
+	<div class="frame">
+		<div class="card">
+			<p class="text-center text-title">使用 浏览器插件</p>
+			<hr>
+			<p class="text-center">
+				<a href="" class="text-margin disable"><img src="./images/safari.jpg" alt=""></a>
+				<a href="" class="disable"><img src="./images/chrome.jpg" alt=""></a>
+			</p>
+		</div>
+	</div>
+
+	<div class="frame">
+		<div class="card">
+			<p class="text-center text-title">众人拾柴火焰高 计划</p>
+			<hr>
+			<p>
+				<span class="first-letter">加</span>入妈妈计划开发，视频网站的解析朱一一个人缺失是搞不过了。每个视频网站的解析规则可能会不定时的改变。朱一每天也就看看优酷或者bilibili，不大可能照顾到所有网站（毕竟是个业余项目QAQ）。所以如果你觉得妈妈计划不错。想帮助妈妈计划做的更好，恳请您加入众人拾柴火焰高计划。
+			</p>
+			<hr/>
+			<p class="text-title text-center">搭建本地环境</p>
+			<hr/>
+			<p>首先你能确定你能访问到 <span class="link" href="https://github.com/">Github</span>
+			<script src="https://gist.github.com/zythum/d468af2cbb213d21b928.js"></script>
+			</p>
+			<hr>
+			<p>
+				MAMA2需要本地环境: <br/>
+				<span class="link" href="http://nodejs.org">node</span>
+				<span class="link" href="http://npmjs.com">npm</span>
+				<span class="link" href="http://gulpjs.com">gulp</span>
+			</p>
+			<hr>
+			<p>
+				MAMA2的Github仓库: <br/>
+				<a class="link" href="https://github.com/zythum/mama2">https://github.com/zythum/mama2</a> <br/>
+			</p>
+			<hr>
+			<p>
+				clone到本地后执行: <br/>
+				<span class="link">$ npm install</span>
+			</p>
+			<hr/>
+			<p>
+				然后执行: <br/>
+				<span class="link">$ npm start</span> 或者 <span class="link">$ gulp</span> 
+			</p>
+			<hr/>
+			<p>				
+				本地启动的httpServer默认为 <a class="link" href="http://localhost:8000">http://localhost:8000</a>
+			</p>
+			<hr/>
+			<p>那么本地环境就搭建好了。</p>
+			<hr/>
+			<p>⚠注意: 在开发工程中，确保你的本地环境时开启状态</p>
+			<hr/>
+			<p class="text-center text-title">开发使用 收藏夹脚本</p>
+			<p class="text-center">拖拽下面图标到收藏夹</p>
+			<p class="text-center"><a class="bookmarklet-icon dev" href="javascript:void(function(u,s){s=document.body.appendChild(document.createElement('script'));s.src=u+'?ts='+Date.now();s.charset='UTF-8'}('http://localhost:8000/dest/index.js'))"><span>MAMA2-dev</span></a></p>
+			<hr>			
+			<p class="text-title text-center">开发说明</p>
+			<hr/>
+			<p class="text-center">
+				现在的目录结构是这样的
+				<img class="image" src="./images/dev_ls.png" alt="">
+			</p>
+			<hr/>
+			<p>
+				很凌乱有木有。QAQ<br/>
+				其实一般只需要编写用于获取视频地址的逻辑，我这边称为seeker。所以只需要注意 <span class="link">seeker-</span> 打头的文件，和 <span class="link">seekers</span> 的文件就可以了
+			</p>
+			<hr/>
+			<p class="text-center text-title">举个例子🌰</p>
+			<p class="text-center">我们要为名为 <span class="link">example</span> 的视频网站写seeker脚本</p>
+			<hr/>
+			<p>
+				在src目录下创建 <span class="link">seeker_example.js</span> 文件。<br/>我已经创建好了。文件是这样的<br/>
+				注释很丰富的样子。所以大家看注释吧。嚯嚯嚯嚯
+				<script src="https://gist.github.com/zythum/b869cfeae9eda07ee98a.js"></script>
+			</p>
+			<hr/>
+			<p>
+				然后需要在 <span class="link">seekers.js</span> 文件中加上一行
+				<script src="https://gist.github.com/zythum/2ce7683ff420ffff0509.js"></script>
+			</p>
+			<hr/>
+			<p>
+				大功告成！用浏览器上的开发用收藏夹脚本测试下。
+			</p>
+			<hr/>
+			<p>
+				如果测试ok的话, 那么把代码pull request给朱一吧。<br/>
+				不方便pull request？<br/>
+				那么用email给朱一也是可以的
+				<a class="link" href="mailto:zythum02@gmail.com">zythum02@gmail.com</a>
+			</p>
+		</div>
+		<hr style="margin-top:50px"/>
+		<div class="frame">
+			<p class="text-center text-gray">MAMA2-妈妈再也不用担心我的macbook发热了计划2</p>
+			<p class="text-center text-gray">联系原作者: <a class="link" href="mailto:zythum02@gmail.com">zythum02@gmail.com</a></p>
+
+		</div>
+	</div>
+</body>
+</html>
