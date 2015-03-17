@@ -1,25 +1,25 @@
 /*  ＃Bool canPlayM3U8＃
- *	返回浏览器是否支持m3u8格式的视频播放。
- *	目前chrome,firefox只支持mp4
+ *  返回浏览器是否支持m3u8格式的视频播放。
+ *  目前chrome,firefox只支持mp4
  */
 var canPlayM3U8 = require('./canPlayM3U8')
 
 /*  ＃function jsonp＃
- *	< String
- *	log, 会在页面和console中输出log
+ *  < String
+ *  log, 会在页面和console中输出log
  */
 var jsonp = require('./jsonp')
 
 /*  ＃function log＃
- *	< String
- *	log, 会在页面和console中输出log
+ *  < String
+ *  log, 会在页面和console中输出log
  */
 var log = require('./log')
 
 /*  ＃function match＃
- *	< Bool
+ *  > Bool
  *
- *	返回是否该页面匹配这个解析脚本，
+ *  返回是否该页面匹配这个解析脚本，
  *  这个脚本会在页面的环境中运行。window是页面的window。
  *  你可以从location中或者页面特征中找到是否需要匹配执行下面脚本
  *  ＃注意＃：

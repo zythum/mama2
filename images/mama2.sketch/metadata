@@ -9,9 +9,12 @@
 	<key>commit</key>
 	<string>b2079fe10151ad0eef6cc553b7369ec78d67b9b5</string>
 	<key>fonts</key>
-	<array/>
+	<array>
+		<string>AvenirNext-DemiBold</string>
+		<string>AvenirNext-Heavy</string>
+	</array>
 	<key>length</key>
-	<integer>28586</integer>
+	<integer>7420</integer>
 	<key>version</key>
 	<integer>37</integer>
 </dict>
