@@ -51,7 +51,7 @@ clone到本地后执行: `$ npm install`
 
 注释很丰富的样子。所以大家看注释吧。嚯嚯嚯嚯
 
-```
+```javascript
 //============目前已有的工具函数==============
  
 /*  ＃Bool canPlayM3U8＃
@@ -150,7 +150,7 @@ exports.getVideos = function (callback) {
 
 然后需要在 seekers.js 文件中加上一行
 
-```
+```javascript
 module.exports = [
 	require('./seeker_bilibili'),
 	require('./seeker_youku'),
