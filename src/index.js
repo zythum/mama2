@@ -1,10 +1,8 @@
 var flashBlocker  = require('./flashBlocker')
-
 var createElement = require('./createElement')
 var player        = require('./player')
 var log           = require('./log')
-
-var mamaKey       = 'MAMAKEY_田琴是这个世界上最可爱的女孩子呵呵呵呵，我要让全世界都在知道'
+var mamaKey       = require('./mamaKey')
 var matched
 
 if (window[mamaKey] != true) {
@@ -82,6 +80,7 @@ function seeked (source, comments) {
 		delete window[mamaKey]
 	}
 	var player = new MAMAPlayer('MAMA2_video_placeHolder', '800x400', source, comments)
+	player.iframe.contentWindow.focus();
 	flashBlocker()
 	player.iframe.style.display = 'block'
 }

@@ -1,10 +1,12 @@
+/*  ＃function jsonp#
+ *  jsonp方法。推荐使用ajax方法。ajax包含了jsonp
+ */
 var createElement = require('./createElement')
+var noop          = require('./noop')
 
 var callbackPrefix = 'MAMA2_HTTP_JSONP_CALLBACK'
 var callbackCount  = 0
 var timeoutDelay   = 10000
-
-function noop () {}
 
 function callbackHandle () {
 	return callbackPrefix + callbackCount++

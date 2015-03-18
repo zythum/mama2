@@ -1,3 +1,8 @@
+/*  ＃function log＃
+ *  < String
+ *  log, 会在页面和console中输出log
+ */
+
 var createElement = require('./createElement')
 var MAMALogDOM
 var logTimer

@@ -1,3 +1,6 @@
+/*
+ * 用于简单创建html节点
+ */
 function createElement (tagName, attributes) {
 	var element = document.createElement(tagName)
 	if ( typeof attributes === 'function' ) {

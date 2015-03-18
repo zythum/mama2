@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>MAMA2</title>
+</head>
+<body>
+	<script type="text/javascript">
+	safari.application.addEventListener("command", function (e) {
+		if(e.command == 'MAMA2'){
+			safari.application.activeBrowserWindow.activeTab.page.dispatchMessage('MAMA2');
+		}
+	}, false);
+	</script>
+</body>
+</html>

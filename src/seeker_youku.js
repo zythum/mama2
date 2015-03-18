@@ -1,5 +1,5 @@
 var canPlayM3U8 = require('./canPlayM3U8')
-var jsonp       = require('./jsonp')
+var ajax        = require('./ajax')
 var log         = require('./log')
 exports.match = function () {
 	return /v\.youku\.com/.test(location.host) && !!window.videoId
@@ -193,10 +193,10 @@ exports.getVideos = function (callback) {
 			return "http://k.youku.com" + (c + ((i ? "/password/" + i : "") + (g ? g : "")))
 		}
 	};
-	
-	jsonp(
-		'http://v.youku.com/player/getPlaylist/VideoIDS/' + _id + '/Pf/4/ctype/12/ev/1',
-		function(param){
+	ajax({
+		url: 'http://v.youku.com/player/getPlaylist/VideoIDS/' + _id + '/Pf/4/ctype/12/ev/1',
+		jsonp: '__callback',
+		callback: function (param) {
 			if(param == -1) {
 				log('解析youku视频地址失败', 2)
 			}
@@ -227,7 +227,6 @@ exports.getVideos = function (callback) {
 				log('解析youku视频地址成功 ' + source.map(function (item) {return '<a href='+item[1]+'>'+item[0]+'</a>'}).join(' '), 2)
 				callback(source);
 			}
-		},
-		'__callback'
-	);
+		}
+	})
 }
