@@ -2,7 +2,7 @@
 
 > 妈妈计划用于解决在看视频网站时macbook发热严重的问题。使用video来替换原来的flash播放器。
 
-[具体查看这里](http://zythum.github.io/mama2/)
+[具体查看这里 http://zythum.github.io/mama2/](http://zythum.github.io/mama2/)
 
 目前网站支持列表:
 
@@ -15,7 +15,7 @@
 
 ###搭建本地环境
 
-[具体查看这里](http://zythum.github.io/mama2/)
+[具体查看这里 http://zythum.github.io/mama2/](http://zythum.github.io/mama2/)
 
 MAMA2需要本地环境: `node` `npm` `gulp`
 
