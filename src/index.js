@@ -3,6 +3,7 @@ var createElement = require('./createElement')
 var player        = require('./player')
 var log           = require('./log')
 var mamaKey       = require('./mamaKey')
+var seekers       = require('./seekers')
 var matched
 
 if (window[mamaKey] != true) {
@@ -85,14 +86,9 @@ function seeked (source, comments) {
 	player.iframe.style.display = 'block'
 }
 
-[
-	require('./seeker_bilibili'),
-	require('./seeker_youku')
-
-
-].forEach(function (seeker) {
+seekers.forEach(function (seeker) {
 	if (matched === true) return
-	if (seeker.match() === true) {
+	if (!!seeker.match() === true) {
 		matched = true
 		seeker.getVideos(seeked)		
 	}

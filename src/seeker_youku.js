@@ -4,9 +4,8 @@ var log         = require('./log')
 exports.match = function () {
 	return /v\.youku\.com/.test(location.host) && !!window.videoId
 }
-exports.getVideos = function (callback) {
-	log('开始解析youku视频地址')
-	var _id = window.videoId;
+var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
+	log('开始解析youku视频地址')	
 	var mk_a3 = 'b4et';
 	var mk_a4 = 'boa4';
 	var userCache_a1 = '4';
@@ -229,4 +228,7 @@ exports.getVideos = function (callback) {
 			}
 		}
 	})
+}
+exports.getVideos = function (callback) {
+	parseYoukuCode(window.videoId, callback)
 }

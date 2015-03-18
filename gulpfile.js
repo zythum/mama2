@@ -7,7 +7,7 @@ var gutil      = require('gulp-util');
 gulp.task('build', function() {
 	gulp.src('./src/index.js')
 		.pipe(browserify().on('error', gutil.log))
-		.pipe(uglify())
+		// .pipe(uglify())
 		.pipe(gulp.dest('./dest'));
 });
 gulp.task('watch', ['build'], function() {
