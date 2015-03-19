@@ -11,10 +11,12 @@ if (window[mamaKey] != true) {
 window[mamaKey] = true
 
 function seeked (source, comments) {
-	if (source === false) {
+	if (!source) {
+		log('解析内容地址失败', 2)
 		delete window[mamaKey]
 		return
 	}
+	log('解析内容地址完成'+source.map(function (i) {return '<a href='+i[1]+'>'+i[0]+'</a>'}).join(' '), 2)
 	var mask = createElement('div', {
 		appendTo: document.body,
 		style: {
@@ -27,7 +29,7 @@ function seeked (source, comments) {
 			zIndex: '999999'
 		}
 	})
-	var container = createElement('div', {
+	createElement('div', {
 		appendTo: mask,
 		style: {
 			width: '800px',
@@ -38,7 +40,7 @@ function seeked (source, comments) {
 			marginTop: '-200px',
 			marginLeft: '-400px',
 			borderRadius: '2px',
-			boxShadow: '0 0 2px #000000, 0 0 200px #000000'
+			boxShadow: '0 0 2px #000000, 0 0 200px #000000',
 		}
 	})
 	var container = createElement('div', {
@@ -89,6 +91,7 @@ function seeked (source, comments) {
 seekers.forEach(function (seeker) {
 	if (matched === true) return
 	if (!!seeker.match() === true) {
+		log('开始解析内容地址')
 		matched = true
 		seeker.getVideos(seeked)		
 	}

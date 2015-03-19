@@ -70,7 +70,7 @@ var log = require('./log')
  */
 exports.match = function () {
     //举个例子
-    return /^http:\/\/www\.iqiyi\.com//.test(location.href) && !!window['$letv'] && !!window.Qiyi
+    return /^http:\/\/www\.iqiyi\.com/.test(location.href) && !!window['$letv'] && !!window.Qiyi
 }
 
 var parseCode = exports.parseCode = function (_id, callback) {

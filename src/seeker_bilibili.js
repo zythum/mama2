@@ -2,6 +2,10 @@ var purl      = require('./purl')
 var log       = require('./log')
 var httpProxy = require('./httpProxy')
 
+function pad(num, n) { 
+	return (Array(n).join(0) + num).slice(-n)
+}
+
 exports.match = function () {
 	var url = purl(location.href)
 	return url.attr('host').indexOf('bilibili') >= 0 && /^\/video\/av\d+\/$/.test(url.attr('directory'))
@@ -36,7 +40,7 @@ exports.getVideos = function (callback) {
 						return {
 							time: parseFloat(p[0]),
 							pos:  p[1],
-							color: '#' + (p[3] | 0).toString(16),
+							color: '#' + pad((p[3] | 0).toString(16), 6),
 							text: comment['#text']
 						}
 					}).sort(function (a, b) {
