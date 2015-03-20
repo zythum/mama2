@@ -1,14 +1,12 @@
 var flashBlocker  = require('./flashBlocker')
 var createElement = require('./createElement')
-var player        = require('./player')
+var MAMAPlayer    = require('./player')
 var log           = require('./log')
 var mamaKey       = require('./mamaKey')
 var seekers       = require('./seekers')
 var matched
 
 if (window[mamaKey] != true) {
-
-window[mamaKey] = true
 
 function seeked (source, comments) {
 	if (!source) {
@@ -98,6 +96,7 @@ seekers.forEach(function (seeker) {
 })
 
 if (matched === undefined) {
+	delete window[mamaKey]
 	log('对不起，没有找到可以解析的内容', 2)
 }
 
