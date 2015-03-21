@@ -30,13 +30,13 @@ function seeked (source, comments) {
 	createElement('div', {
 		appendTo: mask,
 		style: {
-			width: '800px',
-			height: '400px',
+			width: '1000px',
+			height: '500px',
 			position: 'absolute',
 			top: '50%',
 			left: '50%',
-			marginTop: '-200px',
-			marginLeft: '-400px',
+			marginTop: '-250px',
+			marginLeft: '-500px',
 			borderRadius: '2px',
 			boxShadow: '0 0 2px #000000, 0 0 200px #000000',
 		}
@@ -45,14 +45,14 @@ function seeked (source, comments) {
 		appendTo: mask,
 		innerHTML: '<div id="MAMA2_video_placeHolder"></div>',
 		style: {
-			width: '800px',
-			height: '400px',
+			width: '1000px',
+			height: '500px',
 			position: 'absolute',
 			backgroundColor: '#000000',
 			top: '50%',
 			left: '50%',
-			marginTop: '-200px',
-			marginLeft: '-400px',
+			marginTop: '-250px',
+			marginLeft: '-500px',
 			borderRadius: '2px',
 			overflow: 'hidden'
 		}
@@ -80,7 +80,7 @@ function seeked (source, comments) {
 		player.video.src = "about:blank"
 		delete window[mamaKey]
 	}
-	var player = new MAMAPlayer('MAMA2_video_placeHolder', '800x400', source, comments)
+	var player = new MAMAPlayer('MAMA2_video_placeHolder', '1000x500', source, comments)
 	player.iframe.contentWindow.focus();
 	flashBlocker()
 	player.iframe.style.display = 'block'
