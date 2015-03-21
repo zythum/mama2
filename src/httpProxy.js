@@ -28,7 +28,9 @@ function httpProxy (url, type, params, callback, opts) {
 			url: encodeURIComponent(url),
 			post: type === 'post' ? 1 : 0,			
 			xml: opts.xml ? 1 : 0,
-			gzinflate: opts.gzinflate ? 1 : 0
+			text: opts.text ? 1 : 0,
+			gzinflate: opts.gzinflate ? 1 : 0,
+			ua: opts.ua || ''
 		},
 		jsonp: true,
 		callback: callback,

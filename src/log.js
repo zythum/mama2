@@ -26,7 +26,7 @@ function log (msg, delay) {
 	clearTimeout(logTimer)
 	
 	MAMALogDOM.innerHTML = '<span style="color:#DF6558">MAMA2 &gt;</span> ' + msg
-	console && console.log('%c MAMA2 %c %s', 'background:#24272A; color:#ffffff', '', msg)
+	console && console.log && console.log('%c MAMA2 %c %s', 'background:#24272A; color:#ffffff', '', msg)
 
 	document.body.appendChild(MAMALogDOM)
 	logTimer = setTimeout(function () {
