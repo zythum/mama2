@@ -22,12 +22,13 @@ exports.match = function () {
 
 exports.getVideos = function (callback) {
     var uid = JSON.parse(getCookie('P00002')).uid
-    var cupid = 'qc_100001_100103' //这个写死吧
+    var cupid = 'qc_100001_100102' //这个写死吧
     var tvId = window.Q.PageInfo.playPageInfo.tvId
     var albumId = window.Q.PageInfo.playPageInfo.albumId
-    var vid = window.Q.PageInfo.playPageInfo.vid
+    var vid = document.getElementById('flashbox').getAttribute('data-player-videoid')
 
     var httpProxyOpts = {text: true, ua: 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B410 Safari/600.1.4'}
+    
     httpProxy(location.href.replace('www.iqiyi', 'm.iqiyi'), 'get', {}, function(rs) {
         var m = rs.match(/<script[^>]*>(eval.*)(?=<\/script>)<\/script>/);
         eval(m[1]);
@@ -38,7 +39,7 @@ exports.getVideos = function (callback) {
         param.type = canPlayM3U8 ? 'm3u8' : 'mp4',
         param.qypid = tvId + '_21'
         ajax({
-            url: 'http://cache.m.iqiyi.com/jp/tmts/354791500/d01671316959eb63b6b2191ea7b32f12/',
+            url: 'http://cache.m.iqiyi.com/jp/tmts/'+tvId+'/'+vid+'/',
             jsonp: true,
             param: param,
             callback: function (rs) {
