@@ -1,4 +1,4 @@
-var url = 'http://localhost:8000/dest/index.js'
+var url = 'http://zythum.sinaapp.com/mama2/dest/index.js'
 safari.self.addEventListener("message", function(theMessageEvent){
 	if(theMessageEvent.name == 'MAMA2'){
 		if(window === window.top){
