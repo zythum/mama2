@@ -1,3 +1,6 @@
+/*  youku 
+ *  @朱一
+ */
 var canPlayM3U8 = require('./canPlayM3U8')
 var ajax        = require('./ajax')
 var log         = require('./log')

@@ -1,3 +1,6 @@
+/*  iqiyi 
+ *  @朱一
+ */
 var canPlayM3U8 = require('./canPlayM3U8')
 var queryString = require('./queryString')
 var ajax = require('./ajax')
