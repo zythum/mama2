@@ -168,5 +168,8 @@ module.exports = [
 那么用email给朱一也是可以的 zythum02@gmail.com
 
 
+##License##
 
+MAMA2 is under the MIT License.
 
+据说总是需要放个证书的。
