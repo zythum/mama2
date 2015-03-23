@@ -24,7 +24,10 @@ exports.match = function () {
 }
 
 exports.getVideos = function (callback) {
-    var uid = JSON.parse(getCookie('P00002')).uid
+    var uid = '';
+    try{
+    uid = JSON.parse(getCookie('P00002')).uid
+    }catch(e) {}
     var cupid = 'qc_100001_100102' //这个写死吧
     var tvId = window.Q.PageInfo.playPageInfo.tvId
     var albumId = window.Q.PageInfo.playPageInfo.albumId
