@@ -14,7 +14,7 @@ function seeked (source, comments) {
 		delete window[mamaKey]
 		return
 	}
-	log('解析内容地址完成'+source.map(function (i) {return '<a href='+i[1]+'>'+i[0]+'</a>'}).join(' '), 2)
+	log('解析内容地址完成'+source.map(function (i) {return '<a href="'+i[1]+'" target="_blank">'+i[0]+'</a>'}).join(' '), 2)
 	var mask = createElement('div', {
 		appendTo: document.body,
 		style: {
@@ -39,6 +39,21 @@ function seeked (source, comments) {
 			marginLeft: '-500px',
 			borderRadius: '2px',
 			boxShadow: '0 0 2px #000000, 0 0 200px #000000',
+		}
+	})
+	createElement('div', {
+		appendTo: mask,
+		innerHTML: '<a style="color:#555555;" href="http://zythum.sinaapp.com/mama2/" target="_blank">MAMA2: 妈妈再也不用担心我的macbook发热计划</a>',
+		style: {
+			position: 'absolute',
+			bottom: '10px',
+			left: '0',
+			right: '0',
+			height: '20px',
+			lineHeight: '20px',
+			textAlign: 'center',
+			fontSize:'12px',
+			fontFamily: 'arial, sans-serif'
 		}
 	})
 	var container = createElement('div', {
