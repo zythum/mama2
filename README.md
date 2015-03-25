@@ -122,7 +122,7 @@ var log = require('./log')
  *  这个脚本会在页面的环境中运行。window是页面的window。
  *  你可以从location中或者页面特征中找到是否需要匹配执行下面脚本
  *  ＃注意＃：
- *  如果match方法返回true就不会再遍历其他的seeker脚本了。所以请尽量严禁
+ *  如果match方法返回true就不会再遍历其他的seeker脚本了。所以请尽量严谨
  */
 exports.match = function () {
 	//举个例子
