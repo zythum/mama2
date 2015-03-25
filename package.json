@@ -14,7 +14,8 @@
     "gulp-uglify": "~1.1.0",
     "gulp-webserver": "0.9.0",
     "through2": "~0.6.3",
-    "gulp-util": "~3.0.4"
+    "gulp-util": "~3.0.4",
+    "fd-gulp-chinese2unicode": "~0.0.1"
   },
   "bugs": {
     "url": "https://github.com/zythum/mama2/issues"
