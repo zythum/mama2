@@ -23,7 +23,7 @@ exports.getVideos = function (callback) {
 		return pageMatch ? pageMatch[1] : 1
 	}())
 	httpProxy(
-		'http://m.acg.tv/m/html5', 
+		'http://www.bilibili.com/m/html5', 
 		'get', 
 		{aid: aid, page: page},
 	function (rs) {
