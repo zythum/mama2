@@ -23,7 +23,7 @@ exports.match = function (url) {
     return /^http:\/\/www\.iqiyi\.com/.test(url.attr('source')) && !!window.Q.PageInfo
 }
 
-exports.getVideos = function (callback) {
+exports.getVideos = function (url, callback) {
     var uid = '';
     try{
     uid = JSON.parse(getCookie('P00002')).uid

@@ -24,7 +24,7 @@ exports.match = function (url) {
     return /tv\.sohu\.com/.test(url.attr('host'))
 }
 
-exports.getVideos = function (callback) {
+exports.getVideos = function (url, callback) {
     var vid = window.vid;
     var uid = getCookie('SUV');
     function shift_en (i) {var t = i.length, e = 0; return this.replace(/[0-9a-zA-Z]/g, function(s) {var a = s.charCodeAt(0), n = 65, o = 26; a >= 97 ? n = 97 : 65 > a && (n = 48, o = 10); var r = a - n; return String.fromCharCode((r + i[e++%t])%o + n) }) }

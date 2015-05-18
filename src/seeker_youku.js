@@ -232,6 +232,6 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 		}
 	})
 }
-exports.getVideos = function (callback) {
+exports.getVideos = function (url, callback) {
 	parseYoukuCode(window.videoId, callback)
 }

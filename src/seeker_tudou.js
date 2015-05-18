@@ -12,7 +12,7 @@ exports.match = function (url) {
 	return /tudou\.com/.test(url.attr('host')) && (youkuCode || _id)
 }
 
-exports.getVideos = function (callback) {	
+exports.getVideos = function (url, callback) {	
 	var youkuCode = window.itemData && window.itemData.vcode
 	if (youkuCode) {
 		return youku.parseYoukuCode(youkuCode, callback)

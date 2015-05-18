@@ -113,7 +113,7 @@ seekers.forEach(function (seeker) {
 	if (!!seeker.match(url) === true) {
 		log('开始解析内容地址')
 		matched = true
-		seeker.getVideos(seeked)		
+		seeker.getVideos(url, seeked)		
 	}
 })
 
