@@ -105,9 +105,9 @@ function seeked (source, comments) {
 seekers.forEach(function (seeker) {
 	if (matched === true) return
 	
-	var url = purl(location.href);
+	var url = purl(location.href)
 	if (url.attr('host') === 'zythum.sinaapp.com' && 
-		url.attr('directory') === '/mama2/ps4' && url.param('url') ) {
+		url.attr('directory') === '/mama2/ps4/' && url.param('url') ) {
 		url = purl(url.param('url'))
 	}
 	if (!!seeker.match(url) === true) {
