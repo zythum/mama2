@@ -68,9 +68,9 @@ var log = require('./log')
  *  ＃注意＃：
  *  如果match方法返回true就不会再遍历其他的seeker脚本了。所以请尽量严谨
  */
-exports.match = function () {
+exports.match = function (url) {
 	//举个例子
-	return /^http\:\/\/example.com/.test(location.href) && !!window.example
+	return /^http\:\/\/example.com/.test(url.attr('source')) && !!window.example
 }
 
 

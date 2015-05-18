@@ -6,10 +6,10 @@ var ajax        = require('./ajax')
 var log         = require('./log')
 var youku       = require('./seeker_youku')
 
-exports.match = function () {
+exports.match = function (url) {
 	var _id = window.iid || (window.pageConfig && window.pageConfig.iid) || (window.itemData && window.itemData.iid)
 	var youkuCode = window.itemData && window.itemData.vcode
-	return /tudou\.com/.test(window.location.host) && (youkuCode || _id)
+	return /tudou\.com/.test(url.attr('host')) && (youkuCode || _id)
 }
 
 exports.getVideos = function (callback) {	

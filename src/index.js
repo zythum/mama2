@@ -2,6 +2,7 @@ var flashBlocker  = require('./flashBlocker')
 var createElement = require('./createElement')
 var MAMAPlayer    = require('./player')
 var log           = require('./log')
+var purl          = require('./purl')
 var mamaKey       = require('./mamaKey')
 var seekers       = require('./seekers')
 var matched
@@ -92,7 +93,7 @@ function seeked (source, comments) {
 		}
 	}).onclick = function () {
 		document.body.removeChild(mask)
-		player.video.src = "about:blank"
+		player.video.src = 'about:blank'
 		delete window[mamaKey]
 	}
 	var player = new MAMAPlayer('MAMA2_video_placeHolder', '1000x500', source, comments)
@@ -103,7 +104,13 @@ function seeked (source, comments) {
 
 seekers.forEach(function (seeker) {
 	if (matched === true) return
-	if (!!seeker.match() === true) {
+	
+	var url = purl(location.href);
+	if (url.attr('host') === 'zythum.sinaapp.com' && 
+		url.attr('directory') === '/mama2/ps4' && url.param('url') ) {
+		url = purl(url.param('url'))
+	}
+	if (!!seeker.match(url) === true) {
 		log('开始解析内容地址')
 		matched = true
 		seeker.getVideos(seeked)		

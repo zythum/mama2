@@ -9,8 +9,7 @@ function pad(num, n) {
 	return (Array(n).join(0) + num).slice(-n)
 }
 
-exports.match = function () {
-	var url = purl(location.href)
+exports.match = function (url) {
 	return url.attr('host').indexOf('bilibili') >= 0 && /^\/video\/av\d+\/$/.test(url.attr('directory'))
 }
 

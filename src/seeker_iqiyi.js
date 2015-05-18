@@ -19,8 +19,8 @@ function getCookie(c_name) {
     }
     return ""
 }
-exports.match = function () {
-    return /^http:\/\/www\.iqiyi\.com/.test(location.href) && !!window.Q.PageInfo
+exports.match = function (url) {
+    return /^http:\/\/www\.iqiyi\.com/.test(url.attr('source')) && !!window.Q.PageInfo
 }
 
 exports.getVideos = function (callback) {

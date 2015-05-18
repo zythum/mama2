@@ -20,8 +20,8 @@ function getCookie(c_name) {
     return ""
 }
 
-exports.match = function () {
-    return /tv\.sohu\.com/.test(window.location.host)
+exports.match = function (url) {
+    return /tv\.sohu\.com/.test(url.attr('host'))
 }
 
 exports.getVideos = function (callback) {

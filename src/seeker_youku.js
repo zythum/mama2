@@ -4,8 +4,8 @@
 var canPlayM3U8 = require('./canPlayM3U8')
 var ajax        = require('./ajax')
 var log         = require('./log')
-exports.match = function () {
-	return /v\.youku\.com/.test(location.host) && !!window.videoId
+exports.match = function (url) {
+	return /v\.youku\.com/.test(url.attr('host')) && !!window.videoId
 }
 var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 	log('开始解析youku视频地址')	
