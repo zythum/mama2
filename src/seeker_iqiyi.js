@@ -31,13 +31,15 @@ exports.getVideos = function (url, callback) {
     var cupid = 'qc_100001_100102' //这个写死吧
     var tvId = window.Q.PageInfo.playPageInfo.tvId
     var albumId = window.Q.PageInfo.playPageInfo.albumId
-    var vid = document.getElementById('flashbox').getAttribute('data-player-videoid')
+    var vid = window.Q.PageInfo.playPageInfo.vid ||
+        document.getElementById('flashbox').getAttribute('data-player-videoid')
 
-    var httpProxyOpts = {text: true, ua: 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B410 Safari/600.1.4'}
-    
-    httpProxy(location.href.replace('www.iqiyi', 'm.iqiyi'), 'get', {}, function(rs) {
-        var m = rs.match(/<script[^>]*>(eval.*)(?=<\/script>)<\/script>/);
-        eval(m[1]);
+    var httpProxyOpts = {text: true, ua: 'Mozilla/5.0 (iPad; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B410 Safari/600.1.4'}
+
+    httpProxy(location.href, 'get', {}, function(rs) {
+        var m = rs.match(/<script[^>]*>(eval.*;)(?=<\/script>)<\/script>/)
+        window.__qlt = window.__qlt || {MAMA2PlaceHolder: true}
+        eval(m[1])
         var param = weorjjigh(tvId)
         param.uid = uid
         param.cupid = cupid

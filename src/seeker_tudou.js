@@ -45,7 +45,7 @@ exports.getVideos = function (url, callback) {
 				st: '52%2C53%2C54'
 			},
 			jsonp: 'jsonp',
-			callbck: function(param){
+			callback: function(param){
 				if(param === -1 || param.code == -1) return log('解析tudou视频地址失败')
 				for(var urls=[],i=0,len=param.urls.length; i<len; i++){ urls.push([i, param.urls[i]]); }
 				log('解析tudou视频地址成功 ' + urls.map(function (item) {return '<a href='+item[1]+'>'+item[0]+'</a>'}).join(' '), 2)
