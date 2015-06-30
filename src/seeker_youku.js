@@ -5,7 +5,21 @@ var canPlayM3U8 = require('./canPlayM3U8')
 var ajax        = require('./ajax')
 var log         = require('./log')
 exports.match = function (url) {
-	return /v\.youku\.com/.test(url.attr('host')) && !!window.videoId
+	var embeds = document.getElementsByTagName('embed');
+	var youkuReg = /http:\/\/player\.youku\.com\/player\.php\/sid\/(.*)\/v\.swf/;
+	for(var i = 0, len = embeds.length; i < len; i++) {//暂时只播放第一个Flash视频
+		var src = embeds[i]['src'];
+		var embedType = embeds[i]['type'];
+		if (embedType === 'application/x-shockwave-flash' && typeof src === 'string'){
+			var match = youkuReg.exec(src);
+			if (!(match[1])){//match[1]存放视频ID，如XOTUzNDA1NTQ4
+				break;
+			}
+			window.videoId = match[1];//绑定视频ID，竟然就直接可以用
+			return true;
+		}
+	}
+	return /v\.youku\.com/.test(url.attr('host')) && !!window.videoId;
 }
 var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 	log('开始解析youku视频地址')	
