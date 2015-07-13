@@ -4,8 +4,8 @@
 var canPlayM3U8 = require('./canPlayM3U8')
 var ajax        = require('./ajax')
 var log         = require('./log')
-exports.match = function () {
-	return /v\.youku\.com/.test(location.host) && !!window.videoId
+exports.match = function (url) {
+	return /v\.youku\.com/.test(url.attr('host')) && !!window.videoId
 }
 var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 	log('开始解析youku视频地址')	
@@ -210,7 +210,7 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 			c     = c.split("_");
 			sid   = c[0];
 			token = c[1];
-			if ( !/PlayStation/.test(window.navigator.userAgent) && canPlayM3U8) {
+			if ( canPlayM3U8 ) {
 				var ep  = encodeURIComponent(D(E(F(mk_a4 + "poz" + userCache_a2, [19, 1, 4, 7, 30, 14, 28, 8, 24, 17, 6, 35, 34, 16, 9, 10, 13, 22, 32, 29, 31, 21, 18, 3, 2, 23, 25, 27, 11, 20, 5, 15, 12, 0, 33, 26]).toString(), sid + "_" + _id + "_" + token)));
 				var oip = a.ip;
 				var source = [
@@ -232,6 +232,6 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 		}
 	})
 }
-exports.getVideos = function (callback) {
+exports.getVideos = function (url, callback) {
 	parseYoukuCode(window.videoId, callback)
 }

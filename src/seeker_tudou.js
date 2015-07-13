@@ -6,13 +6,13 @@ var ajax        = require('./ajax')
 var log         = require('./log')
 var youku       = require('./seeker_youku')
 
-exports.match = function () {
+exports.match = function (url) {
 	var _id = window.iid || (window.pageConfig && window.pageConfig.iid) || (window.itemData && window.itemData.iid)
 	var youkuCode = window.itemData && window.itemData.vcode
-	return /tudou\.com/.test(window.location.host) && (youkuCode || _id)
+	return /tudou\.com/.test(url.attr('host')) && (youkuCode || _id)
 }
 
-exports.getVideos = function (callback) {	
+exports.getVideos = function (url, callback) {	
 	var youkuCode = window.itemData && window.itemData.vcode
 	if (youkuCode) {
 		return youku.parseYoukuCode(youkuCode, callback)
@@ -45,7 +45,7 @@ exports.getVideos = function (callback) {
 				st: '52%2C53%2C54'
 			},
 			jsonp: 'jsonp',
-			callbck: function(param){
+			callback: function(param){
 				if(param === -1 || param.code == -1) return log('解析tudou视频地址失败')
 				for(var urls=[],i=0,len=param.urls.length; i<len; i++){ urls.push([i, param.urls[i]]); }
 				log('解析tudou视频地址成功 ' + urls.map(function (item) {return '<a href='+item[1]+'>'+item[0]+'</a>'}).join(' '), 2)

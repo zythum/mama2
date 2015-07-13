@@ -22,7 +22,7 @@ function httpProxy (url, type, params, callback, opts) {
 	opts = opts || {}
 	ajax({
 		url: proxyUrl,
-		param : {			
+		param : {
 			params: encodeURIComponent(queryString(params)),//上行参数
 			
 			url: encodeURIComponent(url),

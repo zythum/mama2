@@ -9,14 +9,12 @@ function pad(num, n) {
 	return (Array(n).join(0) + num).slice(-n)
 }
 
-exports.match = function () {
-	var url = purl(location.href)
+exports.match = function (url) {
 	return url.attr('host').indexOf('bilibili') >= 0 && /^\/video\/av\d+\/$/.test(url.attr('directory'))
 }
 
-exports.getVideos = function (callback) {
+exports.getVideos = function (url, callback) {
 	log('开始解析bilibli视频地址')
-	var url = purl(location.href)
 	var aid = url.attr('directory').match(/^\/video\/av(\d+)\/$/)[1]
 	var page = (function () {
 		pageMatch = url.attr('file').match(/^index\_(\d+)\.html$/)

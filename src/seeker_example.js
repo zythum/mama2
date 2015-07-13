@@ -60,6 +60,7 @@ var log = require('./log')
 
 
 /*  ＃function match＃
+ *  < url 当前地址的url的purl
  *  > Bool
  *
  *  返回是否该页面匹配这个解析脚本，
@@ -68,15 +69,16 @@ var log = require('./log')
  *  ＃注意＃：
  *  如果match方法返回true就不会再遍历其他的seeker脚本了。所以请尽量严谨
  */
-exports.match = function () {
+exports.match = function (url) {
 	//举个例子
-	return /^http\:\/\/example.com/.test(location.href) && !!window.example
+	return /^http\:\/\/example.com/.test(url.attr('source')) && !!window.example
 }
 
 
 
 /*  ＃function getVideos＃
  *	< callback([["影片名称", "影片地址"], ["影片名称2", "影片地址2"]...])
+ *  < url 当前地址的url的purl
  *  
  *	如果上面的match方法返回true。那么就会执行到getVideos方法
  *  该方法用于获取视频源地址
@@ -85,7 +87,7 @@ exports.match = function () {
  *  你可以从location中或者页面特征中找到获取视频源地址的方法
  *  该脚本用callback方法提交，格式为[["影片名称", "影片地址"], ["影片名称2", "影片地址2"]...]
  */
-exports.getVideos = function (callback) {
+exports.getVideos = function (url, callback) {
 	//举个例子
 	callback([
 		["高清": "http://xxxxx.xxxx.xxx/xxx/xxx/xxx/xxx.m3u8"],
