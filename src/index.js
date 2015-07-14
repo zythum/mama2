@@ -5,6 +5,7 @@ var log           = require('./log')
 var purl          = require('./purl')
 var mamaKey       = require('./mamaKey')
 var seekers       = require('./seekers')
+var flvsp         = require('./seeker_flvsp');
 var matched
 
 if (window[mamaKey] != true) {
@@ -14,7 +15,7 @@ function seeked (source, comments) {
 		log('解析内容地址失败', 2)
 		delete window[mamaKey]
 		return
-	}
+	}	
 	log('解析内容地址完成'+source.map(function (i) {return '<a href="'+i[1]+'" target="_blank">'+i[0]+'</a>'}).join(' '), 2)
 	var mask = createElement('div', {
 		appendTo: document.body,
@@ -97,19 +98,20 @@ function seeked (source, comments) {
 		delete window[mamaKey]
 	}
 	var player = new MAMAPlayer('MAMA2_video_placeHolder', '1000x500', source, comments)
-	player.iframe.contentWindow.focus();
+	player.iframe.contentWindow.focus()
 	flashBlocker()
 	player.iframe.style.display = 'block'
+	window[mamaKey] = true
+}
+
+var url = purl(location.href)
+if (url.attr('host') === 'zythum.sinaapp.com' && 
+	url.attr('directory') === '/mama2/ps4/' && url.param('url') ) {
+	url = purl(url.param('url'))
 }
 
 seekers.forEach(function (seeker) {
 	if (matched === true) return
-	
-	var url = purl(location.href)
-	if (url.attr('host') === 'zythum.sinaapp.com' && 
-		url.attr('directory') === '/mama2/ps4/' && url.param('url') ) {
-		url = purl(url.param('url'))
-	}
 	if (!!seeker.match(url) === true) {
 		log('开始解析内容地址')
 		matched = true
@@ -118,9 +120,8 @@ seekers.forEach(function (seeker) {
 })
 
 if (matched === undefined) {
-	delete window[mamaKey]
-	log('对不起，没有找到可以解析的内容', 2)
+	log('尝试使用<a target="_blank" href="flvsp.com">flvsp.com</a>解析, 感谢flvsp.com', 2)
+	flvsp.getVideos(url, seeked)
 }
-
 
 }
