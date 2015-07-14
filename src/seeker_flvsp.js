@@ -18,7 +18,7 @@ exports.getVideos = function (url, callback) {
 		},
 		callback: function(param) {
 			if (param.code != 200) {
-				log('<a target="_blank" href="flvsp.com">flvsp.com</a>解析失败。再次感谢flvsp.com');
+				log('<a target="_blank" href="http://flvsp.com">flvsp.com</a>解析失败。再次感谢flvsp.com');
 				callback(false);
 			}
 			var source = canPlayM3U8 && param.m3u8 ? param.m3u8 : param.mp4;
