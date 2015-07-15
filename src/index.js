@@ -120,7 +120,7 @@ seekers.forEach(function (seeker) {
 })
 
 if (matched === undefined) {
-	log('尝试使用<a target="_blank" href="http://flvsp.com">flvsp.com</a>解析, 感谢flvsp.com', 2)
+	log('尝试使用<a target="_blank" href="http://weibo.com/justashit">一环同学</a>提供的解析服务', 2)
 	flvsp.getVideos(url, seeked)
 }
 
