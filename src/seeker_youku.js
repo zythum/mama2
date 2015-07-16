@@ -210,7 +210,7 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 			c     = c.split("_");
 			sid   = c[0];
 			token = c[1];
-			if ( canPlayM3U8 ) {
+			if ( canPlayM3U8 && navigator.userAgent.indexOf('PlayStation') === -1 ) {
 				var ep  = encodeURIComponent(D(E(F(mk_a4 + "poz" + userCache_a2, [19, 1, 4, 7, 30, 14, 28, 8, 24, 17, 6, 35, 34, 16, 9, 10, 13, 22, 32, 29, 31, 21, 18, 3, 2, 23, 25, 27, 11, 20, 5, 15, 12, 0, 33, 26]).toString(), sid + "_" + _id + "_" + token)));
 				var oip = a.ip;
 				var source = [
