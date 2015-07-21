@@ -224,6 +224,7 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 			} else {
 				var t = new T(a);
 				var source = [
+					['高清', t._videoSegsDic['mp4'][0].src],
 					['标清', t._videoSegsDic['3gphd'][0].src]
 				];
 				log('解析youku视频地址成功 ' + source.map(function (item) {return '<a href='+item[1]+'>'+item[0]+'</a>'}).join(' '), 2)
