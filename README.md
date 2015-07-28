@@ -12,6 +12,7 @@
 + 爱奇艺-中国领先的视频门户 @朱一
 + 搜狐视频 @朱一
 + 芒果tv [@zhshipu](https://github.com/zhshipu)
++ 91porn [@SnoozeZ](https://github.com/SnoozeZ) - -#
 
 感谢 [一环同学](http://weibo.com/justashit)提供的缺省解析服务（如果不是上面的网站，能播放的都是一环同学的功劳。）
 
