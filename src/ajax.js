@@ -49,7 +49,7 @@ function ajax (options) {
 	}
 
 	var xhr = new XMLHttpRequest()
-	if (method === 'get') {
+	if (method.toLowerCase() === 'get') {
 		url = joinUrl(url, query)
 		query = ''
 	}
@@ -59,7 +59,7 @@ function ajax (options) {
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 ) {
 			if (xhr.status === 200) {
-				var data = request.responseText
+				var data = xhr.responseText
 				if (contentType.toLowerCase() === 'json') {
 					try {
 						data = JSON.parse(data)
