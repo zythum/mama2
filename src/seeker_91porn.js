@@ -6,7 +6,14 @@ var ajax        = require('./ajax')
 var log         = require('./log')
 
 exports.match = function (url) {
-	return /view_video\.php\?viewkey/.test(window.location.href) 
+	if (window.so && window.so.variables) {
+		var fileId = window.so.variables.file
+		var secCode = window.so.variables.seccode
+		var max_vid = window.so.variables.max_vid
+		return !!fileId & !!secCode & !!max_vid & 
+			/view_video\.php\?viewkey/.test( url.attr('source') )
+	}
+	return false;
 }
 
 exports.getVideos = function (url, callback) {	
@@ -36,7 +43,7 @@ exports.getVideos = function (url, callback) {
 				var urls = []
 				urls.push(['低清版', mp4Url])
 				log('解析91porn视频地址成功 ' + urls.map(function (item) {return '<a href='+item[1]+'>'+item[0]+'</a>'}).join(' '), 2)
-				console.info(urls)
+				// console.info(urls)
 				return callback(urls);
 			}
 		});
