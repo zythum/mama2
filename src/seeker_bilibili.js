@@ -29,9 +29,17 @@ exports.getVideos = function (url, callback) {
 			log('获取到<a href="'+rs.src+'">视频地址</a>, 并开始解析bilibli弹幕')
 			var source = [ ['bilibili', rs.src] ]			
 			httpProxy(rs.cid, 'get', {}, function (rs) {
-        log(JSON.stringify(rs));
-				if (rs && rs.i && Array.isArray(rs.i.d)) {					
-					var comments = rs.i.d
+
+				if (rs && rs.i) {					
+          if (Array.isArray(rs.i.d)){
+            var comments = rs.i.d
+          } else if (rs.i.d){
+            var comments = [rs.i.d]
+          }
+          else{
+            var comments = []
+          }
+
 					comments = comments.map(function (comment) {
 						var p = comment['@p'].split(',')
 						switch (p[1] | 0) {
@@ -50,10 +58,6 @@ exports.getVideos = function (url, callback) {
 					})
 					log('一切顺利开始播放', 2)
 					callback(source, comments)
-        }
-        else if (rs && rs.i) {					
-					log('一切顺利开始播放', 2)
-					callback(source)
 				} else {
 					log('解析bilibli弹幕失败, 但勉强可以播放', 2)
 					callback(source)
