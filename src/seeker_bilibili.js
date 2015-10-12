@@ -50,7 +50,7 @@ exports.getVideos = function (url, callback) {
 					log('一切顺利开始播放', 2)
 					callback(source, comments)
         }
-        else if (rs && rs.i && rs.i.d) {					
+        else if (rs && rs.i) {					
 					log('一切顺利开始播放', 2)
 					callback(source)
 				} else {
