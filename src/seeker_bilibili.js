@@ -29,7 +29,8 @@ exports.getVideos = function (url, callback) {
 			log('获取到<a href="'+rs.src+'">视频地址</a>, 并开始解析bilibli弹幕')
 			var source = [ ['bilibili', rs.src] ]			
 			httpProxy(rs.cid, 'get', {}, function (rs) {
-				if (rs && rs.i && rs.i.d) {					
+        log(JSON.stringify(rs));
+				if (rs && rs.i && Array.isArray(rs.i.d)) {					
 					var comments = rs.i.d
 					comments = comments.map(function (comment) {
 						var p = comment['@p'].split(',')
