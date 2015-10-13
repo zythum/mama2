@@ -31,15 +31,7 @@ exports.getVideos = function (url, callback) {
 			httpProxy(rs.cid, 'get', {}, function (rs) {
 
 				if (rs && rs.i) {					
-          if (Array.isArray(rs.i.d)){
-            var comments = rs.i.d
-          } else if (rs.i.d){
-            var comments = [rs.i.d]
-          }
-          else{
-            var comments = []
-          }
-
+          var comments = [].cancat(rs.i.d || [])
 					comments = comments.map(function (comment) {
 						var p = comment['@p'].split(',')
 						switch (p[1] | 0) {
