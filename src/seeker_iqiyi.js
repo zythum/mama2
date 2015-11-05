@@ -42,7 +42,7 @@ exports.getVideos = function (url, callback) {
         window.QP = window.QP || {}
         window.QP._ready = function (e) {if(this._isReady){e&&e()}else{e&&this._waits.push(e)}}
         eval(m[1])
-        var param = weorjjigh(tvId)
+        var param = {};
         param.uid = uid
         param.cupid = cupid
         param.platForm = 'h5'
