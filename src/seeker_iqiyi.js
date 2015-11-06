@@ -37,7 +37,7 @@ exports.getVideos = function (url, callback) {
     var httpProxyOpts = {text: true, ua: 'Mozilla/5.0 (iPad; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B410 Safari/600.1.4'}
 
     httpProxy(location.href, 'get', {}, function(rs) {
-        var m = rs.match(/<script[^>]*>(eval.*;)(?=<\/script>)<\/script>/)
+        var m = rs.match(/<script[^>]*>\s*(eval.*;)\s*(?=<\/script>)<\/script>/)
         window.__qlt = window.__qlt || {MAMA2PlaceHolder: true}
         window.QP = window.QP || {}
         window.QP._ready = function (e) {if(this._isReady){e&&e()}else{e&&this._waits.push(e)}}
