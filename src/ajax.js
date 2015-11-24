@@ -29,7 +29,8 @@ function queryString (obj) {
 }
 
 function joinUrl (url, queryString) {
-	return url + (url.indexOf('?') ? '?' : '&') + queryString
+	if (queryString.length === 0) return url
+	return url + (url.indexOf('?') === -1 ? '?' : '&') + queryString
 }
 
 function ajax (options) {

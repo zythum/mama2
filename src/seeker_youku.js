@@ -16,7 +16,44 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 	var rs;
 	var sid;
 	var token;
-
+	function decode64(a) {
+		if (!a)
+			return "";
+		a = a.toString();
+		var b, c, d, e, f, g, h, i = new Array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1);
+		for (g = a.length, f = 0, h = ""; g > f;) {
+			do
+				b = i[255 & a.charCodeAt(f++)];
+			while (g > f && -1 == b);
+			if (-1 == b)
+				break;
+			do
+				c = i[255 & a.charCodeAt(f++)];
+			while (g > f && -1 == c);
+			if (-1 == c)
+				break;
+			h += String.fromCharCode(b << 2 | (48 & c) >> 4);
+			do {
+				if (d = 255 & a.charCodeAt(f++), 61 == d)
+					return h;
+				d = i[d]
+			}
+			while (g > f && -1 == d);
+			if (-1 == d)
+				break;
+			h += String.fromCharCode((15 & c) << 4 | (60 & d) >> 2);
+			do {
+				if (e = 255 & a.charCodeAt(f++), 61 == e)
+					return h;
+				e = i[e]
+			}
+			while (g > f && -1 == e);
+			if (-1 == e)
+				break;
+			h += String.fromCharCode((3 & d) << 6 | e)
+		}
+		return h
+	}
 	function na(a) {
 		if (!a) return "";
 		var a = a.toString(),
@@ -196,17 +233,17 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 		}
 	};
 	ajax({
-		url: 'http://v.youku.com/player/getPlaylist/VideoIDS/' + _id + '/Pf/4/ctype/12/ev/1',
-		jsonp: '__callback',
+		url: 'http://play.youku.com/play/get.json?vid=' + _id + '&ct=12',
+		jsonp: true,
 		callback: function (param) {
 			if(param == -1) {
 				log('解析youku视频地址失败', 2)
 			}
 			rs = param;
-			var a = param.data[0],
+			var a = param.data,
 				c = E(F(mk_a3 + "o0b" + userCache_a1, [19, 1, 4, 7, 30, 14, 28, 8, 24,
 					17, 6, 35, 34, 16, 9, 10, 13, 22, 32, 29, 31, 21, 18, 3, 2, 23, 25, 27, 11, 20, 5, 15, 12, 0, 33, 26
-				]).toString(), na(a.ep));
+				]).toString(), decode64(a.security.encrypt_string));
 			c     = c.split("_");
 			sid   = c[0];
 			token = c[1];
