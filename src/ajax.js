@@ -40,6 +40,7 @@ function ajax (options) {
 	var callback    = defalutOption(options.callback, noop)
 	var contentType = defalutOption(options.contentType, 'json')
 	var context     = defalutOption(options.context, null)
+	var headers = defalutOption(options.headers, {})
 
 	if (options.jsonp) {
 		return jsonp(
@@ -56,6 +57,9 @@ function ajax (options) {
 	}
 	xhr.open(method, url, true)
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+	for (var header in headers) {
+		xhr.setRequestHeader(header, headers[header])
+	}
 	xhr.send(query)
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 ) {
