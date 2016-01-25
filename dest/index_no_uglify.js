@@ -126,7 +126,7 @@ if (matched === undefined) {
 }
 
 }
-},{"./createElement":4,"./flashBlocker":5,"./log":8,"./mamaKey":9,"./player":11,"./purl":12,"./seeker_flvsp":16,"./seekers":21}],2:[function(require,module,exports){
+},{"./createElement":4,"./flashBlocker":5,"./log":9,"./mamaKey":10,"./player":12,"./purl":13,"./seeker_flvsp":17,"./seekers":22}],2:[function(require,module,exports){
 /*  \uff03function ajax#
  *  < {
  *    url:          String   \u8bf7\u6c42\u5730\u5740
@@ -206,7 +206,7 @@ function ajax (options) {
 }
 module.exports = ajax;
 
-},{"./jsonp":7,"./noop":10,"./queryString":13}],3:[function(require,module,exports){
+},{"./jsonp":8,"./noop":11,"./queryString":14}],3:[function(require,module,exports){
 /*  \uff03Bool canPlayM3U8\uff03
  *  \u8fd4\u56de\u6d4f\u89c8\u5668\u662f\u5426\u652f\u6301m3u8\u683c\u5f0f\u7684\u89c6\u9891\u64ad\u653e。
  *  \u76ee\u524dchrome,firefox\u53ea\u652f\u6301mp4
@@ -329,6 +329,19 @@ module.exports = function() {
 // document.addEventListener("beforeload", handleBeforeLoadEvent, true);
 
 },{}],6:[function(require,module,exports){
+module.exports = function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=")
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1
+            c_end = document.cookie.indexOf(";", c_start)
+            if (c_end == -1) c_end = document.cookie.length
+            return unescape(document.cookie.substring(c_start, c_end))
+        }
+    }
+    return ""
+}
+},{}],7:[function(require,module,exports){
 /*  \uff03function httpProxy#
  *  < String        \u8bf7\u6c42\u5730\u5740
  *  < String        \u8bf7\u6c42\u65b9\u6cd5GET,POST,etc.
@@ -355,13 +368,13 @@ function httpProxy (url, type, params, callback, opts) {
 		url: proxyUrl,
 		param : {
 			params: encodeURIComponent(queryString(params)),//\u4e0a\u884c\u53c2\u6570
-			
+			referrer: opts.referrer || location.href,
 			url: encodeURIComponent(url),
 			post: type === 'post' ? 1 : 0,			
 			xml: opts.xml ? 1 : 0,
 			text: opts.text ? 1 : 0,
 			gzinflate: opts.gzinflate ? 1 : 0,
-			ua: opts.ua || ''
+			ua: opts.ua || navigator.userAgent
 		},
 		jsonp: true,
 		callback: callback,
@@ -370,7 +383,7 @@ function httpProxy (url, type, params, callback, opts) {
 }
 
 module.exports = httpProxy
-},{"./ajax":2,"./createElement":4,"./queryString":13}],7:[function(require,module,exports){
+},{"./ajax":2,"./createElement":4,"./queryString":14}],8:[function(require,module,exports){
 /*  \uff03function jsonp#
  *  jsonp\u65b9\u6cd5。\u63a8\u8350\u4f7f\u7528ajax\u65b9\u6cd5。ajax\u5305\u542b\u4e86jsonp
  */
@@ -407,7 +420,7 @@ function jsonp (url, callback, callbackKey) {
 }
 
 module.exports = jsonp
-},{"./createElement":4,"./noop":10}],8:[function(require,module,exports){
+},{"./createElement":4,"./noop":11}],9:[function(require,module,exports){
 /*  \uff03function log\uff03
  *  < String
  *  log, \u4f1a\u5728\u9875\u9762\u548cconsole\u4e2d\u8f93\u51falog
@@ -444,13 +457,13 @@ function log (msg, delay) {
 	}, delay*1000 || logDelay)
 }
 module.exports = log
-},{"./createElement":4}],9:[function(require,module,exports){
+},{"./createElement":4}],10:[function(require,module,exports){
 //\u5988\u5988\u8ba1\u5212\u552f\u4e00\u503c
 module.exports = 'MAMAKEY_\u7530\u7434\u662f\u8fd9\u4e2a\u4e16\u754c\u4e0a\u6700\u53ef\u7231\u7684\u5973\u5b69\u5b50\u5475\u5475\u5475\u5475\uff0c\u6211\u8981\u8ba9\u5168\u4e16\u754c\u90fd\u5728\u77e5\u9053'
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 //\u7a7a\u65b9\u6cd5
 module.exports = function () {}
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var MAMAPlayer;
 
 // MAMAPlayer 
@@ -459,7 +472,7 @@ var MAMAPlayer;
 
 //exports
 module.exports = MAMAPlayer;
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /*
  * Purl (A JavaScript URL parser) v2.3.1
  * Developed and maintanined by Mark Perkins, mark@allmarkedup.com
@@ -702,7 +715,7 @@ function purl( url, strictMode ) {
 
 module.exports = purl;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /*  \uff03function queryString#
  *  < Object   \u4f8b\u5982 {a:1,b:2,c:3}
  *  > String   \u4f8b\u5982 a=1&b=2&c=3
@@ -718,7 +731,7 @@ function queryString (obj) {
 	return query.join('&')
 }
 module.exports = queryString
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /*  91porn 
  *  @Snooze 2015-7-26
  */
@@ -775,13 +788,14 @@ exports.getVideos = function (url, callback) {
 
 
 
-},{"./ajax":2,"./canPlayM3U8":3,"./log":8}],15:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],16:[function(require,module,exports){
 /*  bilibli 
  *  @\u6731\u4e00
  */
 var purl      = require('./purl')
 var log       = require('./log')
 var httpProxy = require('./httpProxy')
+var getCookie = require('./getCookie')
 
 function pad(num, n) { 
 	return (Array(n).join(0) + num).slice(-n)
@@ -798,10 +812,11 @@ exports.getVideos = function (url, callback) {
 		pageMatch = url.attr('file').match(/^index\_(\d+)\.html$/)
 		return pageMatch ? pageMatch[1] : 1
 	}())
+	
 	httpProxy(
 		'http://www.bilibili.com/m/html5', 
 		'get', 
-		{aid: aid, page: page},
+		{aid: aid, page: page, sid: getCookie('sid')},
 	function (rs) {
 		if (rs && rs.src) {
 			log('\u83b7\u53d6\u5230<a href="'+rs.src+'">\u89c6\u9891\u5730\u5740</a>, \u5e76\u5f00\u59cb\u89e3\u6790bilibli\u5f39\u5e55')
@@ -841,7 +856,7 @@ exports.getVideos = function (url, callback) {
 	})
 }
 
-},{"./httpProxy":6,"./log":8,"./purl":12}],16:[function(require,module,exports){
+},{"./getCookie":6,"./httpProxy":7,"./log":9,"./purl":13}],17:[function(require,module,exports){
 /*  tudou 
  *  @\u6731\u4e00
  */
@@ -875,7 +890,7 @@ exports.getVideos = function (url, callback) {
 		}
 	})
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":8}],17:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],18:[function(require,module,exports){
 /*  hunantv 
  *  @\u60c5\u8ff7\u6d77\u9f9fpizza
  */
@@ -954,28 +969,17 @@ exports.getVideos = function (url, callback) {
 		}, 2000);
 	}
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":8}],18:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],19:[function(require,module,exports){
 /*  iqiyi 
  *  @\u6731\u4e00
  */
 var canPlayM3U8 = require('./canPlayM3U8')
 var queryString = require('./queryString')
+var getCookie = require('./getCookie')
 var ajax = require('./ajax')
 var httpProxy = require('./httpProxy')
 var log = require('./log')
 
-function getCookie(c_name) {
-    if (document.cookie.length > 0) {
-        c_start = document.cookie.indexOf(c_name + "=")
-        if (c_start != -1) {
-            c_start = c_start + c_name.length + 1
-            c_end = document.cookie.indexOf(";", c_start)
-            if (c_end == -1) c_end = document.cookie.length
-            return unescape(document.cookie.substring(c_start, c_end))
-        }
-    }
-    return ""
-}
 exports.match = function (url) {
     return /^http:\/\/www\.iqiyi\.com/.test(url.attr('source')) && !!window.Q.PageInfo
 }
@@ -1019,7 +1023,7 @@ exports.getVideos = function (url, callback) {
     }, httpProxyOpts)
 }
 
-},{"./ajax":2,"./canPlayM3U8":3,"./httpProxy":6,"./log":8,"./queryString":13}],19:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./getCookie":6,"./httpProxy":7,"./log":9,"./queryString":14}],20:[function(require,module,exports){
 /*  tudou 
  *  @\u6731\u4e00
  */
@@ -1077,7 +1081,7 @@ exports.getVideos = function (url, callback) {
 	};
 	canPlayM3U8 ? m3u8(callback) : mp4(callback)
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":8,"./seeker_youku":20}],20:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":9,"./seeker_youku":21}],21:[function(require,module,exports){
 /*  youku 
  *  @\u6731\u4e00
  */
@@ -1486,7 +1490,7 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 exports.getVideos = function (url, callback) {
 	parseYoukuCode(window.videoId, callback)
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":8}],21:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],22:[function(require,module,exports){
 module.exports = [
 	require('./seeker_bilibili'),
 	require('./seeker_youku'),
@@ -1497,4 +1501,4 @@ module.exports = [
 	// ,require('./seeker_example')
 ]
 
-},{"./seeker_91porn":14,"./seeker_bilibili":15,"./seeker_hunantv":17,"./seeker_iqiyi":18,"./seeker_tudou":19,"./seeker_youku":20}]},{},[1]);
+},{"./seeker_91porn":15,"./seeker_bilibili":16,"./seeker_hunantv":18,"./seeker_iqiyi":19,"./seeker_tudou":20,"./seeker_youku":21}]},{},[1]);

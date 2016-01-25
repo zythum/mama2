@@ -4,6 +4,7 @@
 var purl      = require('./purl')
 var log       = require('./log')
 var httpProxy = require('./httpProxy')
+var getCookie = require('./getCookie')
 
 function pad(num, n) { 
 	return (Array(n).join(0) + num).slice(-n)
@@ -20,10 +21,11 @@ exports.getVideos = function (url, callback) {
 		pageMatch = url.attr('file').match(/^index\_(\d+)\.html$/)
 		return pageMatch ? pageMatch[1] : 1
 	}())
+	
 	httpProxy(
 		'http://www.bilibili.com/m/html5', 
 		'get', 
-		{aid: aid, page: page},
+		{aid: aid, page: page, sid: getCookie('sid')},
 	function (rs) {
 		if (rs && rs.src) {
 			log('获取到<a href="'+rs.src+'">视频地址</a>, 并开始解析bilibli弹幕')
