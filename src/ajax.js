@@ -15,64 +15,64 @@ var noop        = require('./noop')
 var queryString = require('./queryString')
 
 function defalutOption (option, defalutValue) {
-	return option === undefined ? defalutValue : option
+  return option === undefined ? defalutValue : option
 }
 
 function queryString (obj) {
-	var query = []
-	for (one in obj) {
-		if (obj.hasOwnProperty(one)) {
-			query.push([one, obj[one]].join('='))
-		}
-	}
-	return query.join('&')
+  var query = []
+  for (one in obj) {
+    if (obj.hasOwnProperty(one)) {
+      query.push([one, obj[one]].join('='))
+    }
+  }
+  return query.join('&')
 }
 
 function joinUrl (url, queryString) {
-	if (queryString.length === 0) return url
-	return url + (url.indexOf('?') === -1 ? '?' : '&') + queryString
+  if (queryString.length === 0) return url
+  return url + (url.indexOf('?') === -1 ? '?' : '&') + queryString
 }
 
 function ajax (options) {
-	var url         = defalutOption(options.url, '')
-	var query       = queryString( defalutOption(options.param, {}) )
-	var method      = defalutOption(options.method, 'GET')
-	var callback    = defalutOption(options.callback, noop)
-	var contentType = defalutOption(options.contentType, 'json')
-	var context     = defalutOption(options.context, null)
+  var url         = defalutOption(options.url, '')
+  var query       = queryString( defalutOption(options.param, {}) )
+  var method      = defalutOption(options.method, 'GET')
+  var callback    = defalutOption(options.callback, noop)
+  var contentType = defalutOption(options.contentType, 'json')
+  var context     = defalutOption(options.context, null)
 
-	if (options.jsonp) {
-		return jsonp(
-			joinUrl(url, query),
-			callback.bind(context),
-			typeof options.jsonp === 'string' ? options.jsonp : undefined
-		)
-	}
+  if (options.jsonp) {
+    return jsonp(
+      joinUrl(url, query),
+      callback.bind(context),
+      typeof options.jsonp === 'string' ? options.jsonp : undefined
+    )
+  }
 
-	var xhr = new XMLHttpRequest()
-	if (method.toLowerCase() === 'get') {
-		url = joinUrl(url, query)
-		query = ''
-	}
-	xhr.open(method, url, true)
-	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-	xhr.send(query)
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4 ) {
-			if (xhr.status === 200) {
-				var data = xhr.responseText
-				if (contentType.toLowerCase() === 'json') {
-					try {
-						data = JSON.parse(data)
-					} catch(e) {
-						data = -1
-					}					
-				}
-				return callback.call(context, data)
-			} else {
-				return callback.call(context, -1)
-			}
-		}
-	}
+  var xhr = new XMLHttpRequest()
+  if (method.toLowerCase() === 'get') {
+    url = joinUrl(url, query)
+    query = ''
+  }
+  xhr.open(method, url, true)
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+  xhr.send(query)
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 ) {
+      if (xhr.status === 200) {
+        var data = xhr.responseText
+        if (contentType.toLowerCase() === 'json') {
+          try {
+            data = JSON.parse(data)
+          } catch(e) {
+            data = -1
+          }         
+        }
+        return callback.call(context, data)
+      } else {
+        return callback.call(context, -1)
+      }
+    }
+  }
 }
 module.exports = ajax;

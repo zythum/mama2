@@ -19,23 +19,23 @@ var queryString   = require('./queryString')
 var proxyUrl = 'http://zythum.sinaapp.com/mama2/proxy.php'
 
 function httpProxy (url, type, params, callback, opts) {
-	opts = opts || {}
-	ajax({
-		url: proxyUrl,
-		param : {
-			params: encodeURIComponent(queryString(params)),//上行参数
-			referrer: opts.referrer || location.href,
-			url: encodeURIComponent(url),
-			post: type === 'post' ? 1 : 0,			
-			xml: opts.xml ? 1 : 0,
-			text: opts.text ? 1 : 0,
-			gzinflate: opts.gzinflate ? 1 : 0,
-			ua: opts.ua || navigator.userAgent
-		},
-		jsonp: true,
-		callback: callback,
-		context: opts.context
-	})
+  opts = opts || {}
+  ajax({
+    url: proxyUrl,
+    param : {
+      params: encodeURIComponent(queryString(params)),//上行参数
+      referrer: opts.referrer || location.href,
+      url: encodeURIComponent(url),
+      post: type === 'post' ? 1 : 0,
+      xml: opts.xml ? 1 : 0,
+      text: opts.text ? 1 : 0,
+      gzinflate: opts.gzinflate ? 1 : 0,
+      ua: opts.ua || navigator.userAgent
+    },
+    jsonp: true,
+    callback: callback,
+    context: opts.context
+  })
 }
 
 module.exports = httpProxy

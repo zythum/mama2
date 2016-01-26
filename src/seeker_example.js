@@ -70,17 +70,17 @@ var log = require('./log')
  *  如果match方法返回true就不会再遍历其他的seeker脚本了。所以请尽量严谨
  */
 exports.match = function (url) {
-	//举个例子
-	return /^http\:\/\/example.com/.test(url.attr('source')) && !!window.example
+  //举个例子
+  return /^http\:\/\/example.com/.test(url.attr('source')) && !!window.example
 }
 
 
 
 /*  ＃function getVideos＃
- *	< callback([["影片名称", "影片地址"], ["影片名称2", "影片地址2"]...])
+ *  < callback([["影片名称", "影片地址"], ["影片名称2", "影片地址2"]...])
  *  < url 当前地址的url的purl
  *  
- *	如果上面的match方法返回true。那么就会执行到getVideos方法
+ *  如果上面的match方法返回true。那么就会执行到getVideos方法
  *  该方法用于获取视频源地址
  *  同样
  *  这个脚本会在页面的环境中运行。window是页面的window。
@@ -88,9 +88,9 @@ exports.match = function (url) {
  *  该脚本用callback方法提交，格式为[["影片名称", "影片地址"], ["影片名称2", "影片地址2"]...]
  */
 exports.getVideos = function (url, callback) {
-	//举个例子
-	callback([
-		["高清": "http://xxxxx.xxxx.xxx/xxx/xxx/xxx/xxx.m3u8"],
-		["标清": "http://xxxxx.xxxx.xxx/xxx/xxx/xxx/xxx.mp4"]
-	])
+  //举个例子
+  callback([
+    ["高清": "http://xxxxx.xxxx.xxx/xxx/xxx/xxx/xxx.m3u8"],
+    ["标清": "http://xxxxx.xxxx.xxx/xxx/xxx/xxx/xxx.mp4"]
+  ])
 }

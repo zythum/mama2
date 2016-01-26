@@ -4,12 +4,12 @@
  *  用于拼装url地址的query
  */
 function queryString (obj) {
-	var query = []
-	for (one in obj) {
-		if (obj.hasOwnProperty(one)) {
-			query.push([one, obj[one]].join('='))
-		}
-	}
-	return query.join('&')
+  var query = []
+  for (one in obj) {
+    if (obj.hasOwnProperty(one)) {
+      query.push([one, obj[one]].join('='))
+    }
+  }
+  return query.join('&')
 }
 module.exports = queryString
