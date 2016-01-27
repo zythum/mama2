@@ -1,6 +1,6 @@
-#妈妈再也不用担心我的macbook发热了计划2
+#妈妈再也不用担心我的 MacBook 发热了计划2
 
-> 妈妈计划用于解决在看视频网站时macbook发热严重的问题。使用video来替换原来的flash播放器。
+> 妈妈计划用于解决在看视频网站时 MacBook 发热严重的问题。使用video来替换原来的flash播放器。
 
 [具体查看这里 http://zythum.github.io/mama2/](http://zythum.github.io/mama2/)
 
