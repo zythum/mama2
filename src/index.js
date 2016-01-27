@@ -45,7 +45,7 @@ function seeked (source, comments) {
   })
   createElement('div', {
     appendTo: mask,
-    innerHTML: '<a style="color:#555555;" href="http://zythum.sinaapp.com/mama2/" target="_blank">MAMA2: 妈妈再也不用担心我的macbook发热计划</a>',
+    innerHTML: '<a style="color:#555555;" href="http://zythum.sinaapp.com/mama2/" target="_blank">MAMA2: 妈妈再也不用担心我的 MacBook 发热计划</a>',
     style: {
       position: 'absolute',
       bottom: '10px',
