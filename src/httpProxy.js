@@ -21,10 +21,10 @@ var proxyUrl = 'http://zythum.sinaapp.com/mama2/proxy.php'
 function httpProxy (url, type, params, callback, opts) {
   opts = opts || {}
   ajax({
-    url: proxyUrl,
+    url: proxyUrl.split('#')[0],
     param : {
       params: encodeURIComponent(queryString(params)),//上行参数
-      referrer: opts.referrer || location.href,
+      referrer: (opts.referrer || location.href).split('#')[0],
       url: encodeURIComponent(url),
       post: type === 'post' ? 1 : 0,
       xml: opts.xml ? 1 : 0,
