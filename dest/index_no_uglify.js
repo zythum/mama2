@@ -370,16 +370,16 @@ var proxyUrl = 'http://zythum.sinaapp.com/mama2/proxy.php'
 function httpProxy (url, type, params, callback, opts) {
   opts = opts || {}
   ajax({
-    url: proxyUrl.split('#')[0],
+    url: proxyUrl,
     param : {
       params: encodeURIComponent(queryString(params)),//\u4e0a\u884c\u53c2\u6570
-      referrer: (opts.referrer || location.href).split('#')[0],
-      url: encodeURIComponent(url),
+      referrer: encodeURIComponent((opts.referrer || location.href).split('#')[0]),
+      url: encodeURIComponent(url.split('#')[0]),
       post: type === 'post' ? 1 : 0,
       xml: opts.xml ? 1 : 0,
       text: opts.text ? 1 : 0,
       gzinflate: opts.gzinflate ? 1 : 0,
-      ua: opts.ua || navigator.userAgent
+      ua: encodeURIComponent(opts.ua || navigator.userAgent)
     },
     jsonp: true,
     callback: callback,
