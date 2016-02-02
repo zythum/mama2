@@ -22,7 +22,7 @@ exports.match = function (url) {
 }
 
 exports.getVideos = function (url, callback) {
-  var uid = '';
+  var uid = ''
   try{
     uid = JSON.parse(getCookie('P00002')).uid
   }catch(e) {}
@@ -45,11 +45,11 @@ exports.getVideos = function (url, callback) {
     param: param,
     callback: function (rs) {
       var source = []      
-      if (rs.data.vidl && rs.data.vidl.length) {
+      if (rs.data.vidl && rs.data.vidl[0] && rs.data.vidl[0].m3u) {
         source = rs.data.vidl
           .map(function (data) {
-            var vData = formatVd(data.vd);
-            vData.m3u = data.m3u;
+            var vData = formatVd(data.vd)
+            vData.m3u = data.m3u
             return vData;
           })
           .sort(function (dataA, dataB) {
@@ -59,7 +59,7 @@ exports.getVideos = function (url, callback) {
             return [data.text, data.m3u]
           })
       } else {
-        if (rs.data.m3u.length > 0) source = ['标清', rs.data.m3u]
+        if (rs.data.m3u.length > 0) source = [['标清', rs.data.m3u]]
       }
       callback(source)
     }
@@ -77,7 +77,7 @@ exports.getVideos = function (url, callback) {
       window.QP._ready = function (e) {if(this._isReady){e&&e()}else{e&&this._waits.push(e)}}
       eval(m[1])
       window.weorjjigh = weorjjigh
-      getVideoURL();
+      getVideoURL()
     }, httpProxyOpts)
   }
 }
