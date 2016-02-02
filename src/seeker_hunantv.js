@@ -41,34 +41,34 @@ exports.getVideos = function (url, callback) {
     params.limitrate = limitrate[0];
     text = "标清";
     ajax({
-        url: 'http://pcvcr.cdn.imgo.tv/ncrs/vod.do',
-        jsonp: true,
-        param: params,
-        callback: function(data){
-          if (data.status == 'ok') urls.push([text, data.info])
-          params.limitrate = limitrate[1];
-          text = "高清";
-          ajax({
+      url: 'http://pcvcr.cdn.imgo.tv/ncrs/vod.do',
+      jsonp: true,
+      param: params,
+      callback: function(data){
+        if (data.status == 'ok') urls.push([text, data.info])
+        params.limitrate = limitrate[1];
+        text = "高清";
+        ajax({
+          url: 'http://pcvcr.cdn.imgo.tv/ncrs/vod.do',
+          jsonp: true,
+          param: params,
+          callback: function(data){
+            if (data.status == 'ok') urls.push([text, data.info])
+            params.limitrate = limitrate[2];
+            text = "超清";
+            ajax({
               url: 'http://pcvcr.cdn.imgo.tv/ncrs/vod.do',
               jsonp: true,
               param: params,
               callback: function(data){
                 if (data.status == 'ok') urls.push([text, data.info])
-                params.limitrate = limitrate[2];
-                text = "超清";
-                ajax({
-                    url: 'http://pcvcr.cdn.imgo.tv/ncrs/vod.do',
-                    jsonp: true,
-                    param: params,
-                    callback: function(data){
-                      if (data.status == 'ok') urls.push([text, data.info])
-                      return callback(urls);
-                    }
-                  });
+                return callback(urls);
               }
             });
-        }
-      });
+          }
+        });
+      }
+    });
   }else{
     log('请使用Safari观看本视频');
     setTimeout(function(){

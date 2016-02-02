@@ -1,3 +1,8 @@
+/*  ＃function getCookies#
+ *  < String  cookie名
+ *  > String  cookie值
+ */
+
 module.exports = function getCookie(c_name) {
     if (document.cookie.length > 0) {
         c_start = document.cookie.indexOf(c_name + "=")
