@@ -126,7 +126,7 @@ if (matched === undefined) {
 }
 
 }
-},{"./createElement":4,"./flashBlocker":5,"./log":9,"./mamaKey":10,"./player":12,"./purl":13,"./seeker_flvsp":17,"./seekers":22}],2:[function(require,module,exports){
+},{"./createElement":4,"./flashBlocker":5,"./log":9,"./mamaKey":10,"./player":12,"./purl":13,"./seeker_flvsp":18,"./seekers":23}],2:[function(require,module,exports){
 /*  \uff03function ajax#
  *  < {
  *    url:          String   \u8bf7\u6c42\u5730\u5740
@@ -794,6 +794,111 @@ exports.getVideos = function (url, callback) {
 
 
 },{"./ajax":2,"./canPlayM3U8":3,"./log":9}],16:[function(require,module,exports){
+/*  \u767e\u5ea6\u76d8 
+ *  @\u6731\u4e00 \u683c\u5f0f\u5173\u7cfb\u53ea\u80fd\u64ad\u653e\u53ef\u64ad\u653e\u7684\u683c\u5f0f。\u8fd9\u8fb9\u5f3a\u5236\u5224\u65admp4\u53ef\u64ad\u653e。\u5176\u4ed6\u4e0d\u884c。
+ */
+var canPlayM3U8 = require('./canPlayM3U8')
+var ajax        = require('./ajax')
+var log         = require('./log')
+
+function getFilePath (url) {
+  var fileName = url.attr('source').split('/')
+  fileName = fileName[fileName.length - 1]
+  fileName = fileName.split('&')
+  for (var i = 0, t; i < fileName.length; i++) {
+    t = fileName[i].split('=')
+    if (t[0] === 'path') return t[1]
+  }
+  return false
+}
+
+exports.match = function (url) {
+  return url.attr('host').indexOf('pan.baidu.com') >= 0 && window.yunData && getFilePath(url)
+}
+
+exports.getVideos = function (url, callback) {
+  function encodeBase64(G) {
+    var C = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+      B, A, _, F, D, E;
+    _ = G.length;
+    A = 0;
+    B = "";
+    while (A < _) {
+      F = G.charCodeAt(A++) & 255;
+      if (A == _) {
+        B += C.charAt(F >> 2);
+        B += C.charAt((F & 3) << 4);
+        B += "==";
+        break;
+      }
+      D = G.charCodeAt(A++);
+      if (A == _) {
+        B += C.charAt(F >> 2);
+        B += C.charAt(((F & 3) << 4) | ((D & 240) >> 4));
+        B += C.charAt((D & 15) << 2);
+        B += "=";
+        break;
+      }
+      E = G.charCodeAt(A++);
+      B += C.charAt(F >> 2);
+      B += C.charAt(((F & 3) << 4) | ((D & 240) >> 4));
+      B += C.charAt(((D & 15) << 2) | ((E & 192) >> 6));
+      B += C.charAt(E & 63);
+    }
+    return B;
+  };
+  var bdstoken = yunData.MYBDSTOKEN
+  var timeStamp = yunData.timestamp
+  var sign1 = yunData.sign1
+  var sign2; eval('sign2 = ' + yunData.sign2)
+  var sign3 = yunData.sign3
+  var sign = encodeBase64(sign2(sign3, sign1))
+  var filePath = getFilePath(url)
+  if (!filePath) {
+    log('\u6ca1\u6709\u68c0\u6d4b\u5230\u64ad\u653e\u5185\u5bb9', 2)
+    return;
+  }
+
+  var pathArray = decodeURIComponent(filePath).split('/')
+  var fileName = pathArray.pop()
+  var parentPath = pathArray.join('/')
+
+  if (fileName.split('.').pop() !== 'mp4') {
+    log('\u53ea\u80fd\u64ad\u653emp4\u683c\u5f0f\u7684\u6587\u4ef6', 2)
+    return;
+  }
+
+  function getVideoFromFsid (fsid) {
+    ajax({
+      url: '/api/download',
+      method: 'POST',
+      param: {sign: encodeURIComponent(sign), timestamp: timeStamp, fidlist: '["'+fsid+'"]', type: 'dlink'}, 
+      callback: function (res) {
+        if (res.dlink && res.dlink[0] && res.dlink[0].dlink)
+          callback([["\u767e\u6bd2\u76d8", decodeURIComponent(res.dlink[0].dlink)]])
+      }
+    })
+  }
+
+  ajax({
+    url: '/api/categorylist',
+    param: {parent_path: parentPath, page: 1, num: 500, category: 1, bdstoken: bdstoken, channel: 'chunlei', web: 1, app_id: '250528'}, 
+    callback: function (res) {
+      if (!res.info) return;
+      for (var i = 0, len = res.info.length; i < len; i++) {
+        if (res.info[i].server_filename === fileName) {
+          getVideoFromFsid(res.info[i].fs_id)
+          break
+        }
+      }
+    }
+  })
+}
+
+
+
+
+},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],17:[function(require,module,exports){
 /*  bilibli 
  *  @\u6731\u4e00
  */
@@ -861,7 +966,7 @@ exports.getVideos = function (url, callback) {
   })
 }
 
-},{"./getCookie":6,"./httpProxy":7,"./log":9,"./purl":13}],17:[function(require,module,exports){
+},{"./getCookie":6,"./httpProxy":7,"./log":9,"./purl":13}],18:[function(require,module,exports){
 /*  tudou 
  *  @\u6731\u4e00
  */
@@ -895,7 +1000,7 @@ exports.getVideos = function (url, callback) {
     }
   })
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],18:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],19:[function(require,module,exports){
 /*  hunantv 
  *  @\u60c5\u8ff7\u6d77\u9f9fpizza
  */
@@ -974,7 +1079,7 @@ exports.getVideos = function (url, callback) {
     }, 2000);
   }
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],19:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],20:[function(require,module,exports){
 /*  iqiyi 
  *  @\u6731\u4e00
  */
@@ -1059,7 +1164,7 @@ exports.getVideos = function (url, callback) {
   }
 }
 
-},{"./ajax":2,"./canPlayM3U8":3,"./getCookie":6,"./httpProxy":7,"./log":9,"./queryString":14}],20:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./getCookie":6,"./httpProxy":7,"./log":9,"./queryString":14}],21:[function(require,module,exports){
 /*  tudou 
  *  @\u6731\u4e00
  */
@@ -1117,7 +1222,7 @@ exports.getVideos = function (url, callback) {
   };
   canPlayM3U8 ? m3u8(callback) : mp4(callback)
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":9,"./seeker_youku":21}],21:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":9,"./seeker_youku":22}],22:[function(require,module,exports){
 /*  youku 
  *  @\u6731\u4e00
  */
@@ -1526,15 +1631,16 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 exports.getVideos = function (url, callback) {
   parseYoukuCode(window.videoId, callback)
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],22:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],23:[function(require,module,exports){
 module.exports = [
   require('./seeker_bilibili'),
   require('./seeker_youku'),
   require('./seeker_tudou'),
   require('./seeker_iqiyi'),
   require('./seeker_hunantv'),
+  require('./seeker_baidupan'),
   require('./seeker_91porn')
   // ,require('./seeker_example')
 ]
 
-},{"./seeker_91porn":15,"./seeker_bilibili":16,"./seeker_hunantv":18,"./seeker_iqiyi":19,"./seeker_tudou":20,"./seeker_youku":21}]},{},[1]);
+},{"./seeker_91porn":15,"./seeker_baidupan":16,"./seeker_bilibili":17,"./seeker_hunantv":19,"./seeker_iqiyi":20,"./seeker_tudou":21,"./seeker_youku":22}]},{},[1]);
