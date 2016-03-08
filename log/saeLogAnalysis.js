@@ -9,6 +9,16 @@ function os(ua) {
   function has(string) {
     return ua.includes(string);
   }
+  if (has('PlayStation') || has('PS Vita')) return "PlayStation";
+  if (has('Windows Phone')) return "Windows Phone";
+  if (has('Windows')) return "Windows";
+  if (has('iPhone') || has('iPad')) return "IOS";
+  if (has('Android')) return 'Android';
+  if (has('Linux')) return "Linux";
+  if (has('BlackBerry') || has('BB10') || has('PlayBook')) return "BlackBerry";
+  if (has('Googlebot')) return "Googlebot";
+  if (has('Baiduspider')) return "Baiduspider";
+  if (has('bingbot')) return "Bingbot";
   if (has('Mac OS X')) {
     if (has('Chrome')) {
       return 'Mac OS X Chrome';
@@ -18,15 +28,6 @@ function os(ua) {
     }
     return 'Mac OS X Other';
   }
-  if (has('PlayStation') || has('PS Vita')) return "PlayStation";
-  if (has('Windows Phone')) return "Windows Phone";
-  if (has('Windows')) return "Windows";
-  if (has('iPhone') || has('iPad')) return "IOS";
-  if (has('Linux')) return "Linux";
-  if (has('BlackBerry') || has('BB10') || has('PlayBook')) return "BlackBerry";
-  if (has('Googlebot')) return "Googlebot";
-  if (has('Baiduspider')) return "Baiduspider";
-  if (has('bingbot')) return "Bingbot";
   return ua;
 }
 
@@ -109,17 +110,18 @@ fs.readFile(logFilePath, function(err, data) {
   for (let type in rs) {
     if (rs.hasOwnProperty(type)) {
       print(`====${type}====\n`);
-      objectToArray(rs[type])
+      var array = objectToArray(rs[type]);
+      array
         .sort(function(a, b) {
           return b[1] - a[1]
         })
         .forEach(function(keyValue, index) {
-          index < 50 && print(
+          index < 100 && print(
             formatStr(keyValue[1], 8, 'white') +
             formatStr(keyValue[0], 0, 'blue')
           );
         })
-      print('\n');
+      print('\n总条目: ' + array.length + '\n');
     }
   }
 });
