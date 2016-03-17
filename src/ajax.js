@@ -18,16 +18,6 @@ function defalutOption (option, defalutValue) {
   return option === undefined ? defalutValue : option
 }
 
-function queryString (obj) {
-  var query = []
-  for (one in obj) {
-    if (obj.hasOwnProperty(one)) {
-      query.push([one, obj[one]].join('='))
-    }
-  }
-  return query.join('&')
-}
-
 function joinUrl (url, queryString) {
   if (queryString.length === 0) return url
   return url + (url.indexOf('?') === -1 ? '?' : '&') + queryString

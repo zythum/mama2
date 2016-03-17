@@ -5,7 +5,7 @@
  */
 function queryString (obj) {
   var query = []
-  for (one in obj) {
+  for (var one in obj) {
     if (obj.hasOwnProperty(one)) {
       query.push([one, obj[one]].join('='))
     }
