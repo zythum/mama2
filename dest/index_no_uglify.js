@@ -126,7 +126,7 @@ if (matched === undefined) {
 }
 
 }
-},{"./createElement":4,"./flashBlocker":5,"./log":9,"./mamaKey":10,"./player":12,"./purl":13,"./seeker_flvsp":18,"./seekers":23}],2:[function(require,module,exports){
+},{"./createElement":4,"./flashBlocker":5,"./log":10,"./mamaKey":11,"./player":13,"./purl":14,"./seeker_flvsp":19,"./seekers":24}],2:[function(require,module,exports){
 /*  \uff03function ajax#
  *  < {
  *    url:          String   \u8bf7\u6c42\u5730\u5740
@@ -145,16 +145,6 @@ var queryString = require('./queryString')
 
 function defalutOption (option, defalutValue) {
   return option === undefined ? defalutValue : option
-}
-
-function queryString (obj) {
-  var query = []
-  for (one in obj) {
-    if (obj.hasOwnProperty(one)) {
-      query.push([one, obj[one]].join('='))
-    }
-  }
-  return query.join('&')
 }
 
 function joinUrl (url, queryString) {
@@ -206,7 +196,7 @@ function ajax (options) {
 }
 module.exports = ajax;
 
-},{"./jsonp":8,"./noop":11,"./queryString":14}],3:[function(require,module,exports){
+},{"./jsonp":9,"./noop":12,"./queryString":15}],3:[function(require,module,exports){
 /*  \uff03Bool canPlayM3U8\uff03
  *  \u8fd4\u56de\u6d4f\u89c8\u5668\u662f\u5426\u652f\u6301m3u8\u683c\u5f0f\u7684\u89c6\u9891\u64ad\u653e。
  *  \u76ee\u524dchrome,firefox\u53ea\u652f\u6301mp4
@@ -347,6 +337,20 @@ module.exports = function getCookie(c_name) {
     return ""
 }
 },{}],7:[function(require,module,exports){
+var hasFlash = false;
+try {
+  var flashObject = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+  if (flashObject) {
+    hasFlash = true;
+  }
+} catch (e) {
+  if (navigator.mimeTypes && navigator.mimeTypes['application/x-shockwave-flash'] != undefined && 
+    navigator.mimeTypes['application/x-shockwave-flash'].enabledPlugin) {
+    hasFlash = true;
+  }
+}
+module.exports = hasFlash;
+},{}],8:[function(require,module,exports){
 /*  \uff03function httpProxy#
  *  < String        \u8bf7\u6c42\u5730\u5740
  *  < String        \u8bf7\u6c42\u65b9\u6cd5GET,POST,etc.
@@ -388,7 +392,7 @@ function httpProxy (url, type, params, callback, opts) {
 }
 
 module.exports = httpProxy
-},{"./ajax":2,"./createElement":4,"./queryString":14}],8:[function(require,module,exports){
+},{"./ajax":2,"./createElement":4,"./queryString":15}],9:[function(require,module,exports){
 /*  \uff03function jsonp#
  *  jsonp\u65b9\u6cd5。\u63a8\u8350\u4f7f\u7528ajax\u65b9\u6cd5。ajax\u5305\u542b\u4e86jsonp
  */
@@ -425,7 +429,7 @@ function jsonp (url, callback, callbackKey) {
 }
 
 module.exports = jsonp
-},{"./createElement":4,"./noop":11}],9:[function(require,module,exports){
+},{"./createElement":4,"./noop":12}],10:[function(require,module,exports){
 /*  \uff03function log\uff03
  *  < String
  *  log, \u4f1a\u5728\u9875\u9762\u548cconsole\u4e2d\u8f93\u51falog
@@ -462,13 +466,13 @@ function log (msg, delay) {
   }, delay*1000 || logDelay)
 }
 module.exports = log
-},{"./createElement":4}],10:[function(require,module,exports){
+},{"./createElement":4}],11:[function(require,module,exports){
 //\u5988\u5988\u8ba1\u5212\u552f\u4e00\u503c
 module.exports = 'MAMAKEY_\u7530\u7434\u662f\u8fd9\u4e2a\u4e16\u754c\u4e0a\u6700\u53ef\u7231\u7684\u5973\u5b69\u5b50\u5475\u5475\u5475\u5475\uff0c\u6211\u8981\u8ba9\u5168\u4e16\u754c\u90fd\u5728\u77e5\u9053'
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 //\u7a7a\u65b9\u6cd5
 module.exports = function () {}
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var MAMAPlayer;
 
 // MAMAPlayer 
@@ -477,7 +481,7 @@ var MAMAPlayer;
 
 //exports
 module.exports = MAMAPlayer;
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /*
  * Purl (A JavaScript URL parser) v2.3.1
  * Developed and maintanined by Mark Perkins, mark@allmarkedup.com
@@ -720,7 +724,7 @@ function purl( url, strictMode ) {
 
 module.exports = purl;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /*  \uff03function queryString#
  *  < Object   \u4f8b\u5982 {a:1,b:2,c:3}
  *  > String   \u4f8b\u5982 a=1&b=2&c=3
@@ -728,7 +732,7 @@ module.exports = purl;
  */
 function queryString (obj) {
   var query = []
-  for (one in obj) {
+  for (var one in obj) {
     if (obj.hasOwnProperty(one)) {
       query.push([one, obj[one]].join('='))
     }
@@ -736,7 +740,7 @@ function queryString (obj) {
   return query.join('&')
 }
 module.exports = queryString
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /*  91porn 
  *  @Snooze 2015-7-26
  */
@@ -793,7 +797,7 @@ exports.getVideos = function (url, callback) {
 
 
 
-},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],16:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],17:[function(require,module,exports){
 /*  \u767e\u5ea6\u76d8 
  *  @\u6731\u4e00 \u683c\u5f0f\u5173\u7cfb\u53ea\u80fd\u64ad\u653e\u53ef\u64ad\u653e\u7684\u683c\u5f0f。\u8fd9\u8fb9\u5f3a\u5236\u5224\u65admp4\u53ef\u64ad\u653e。\u5176\u4ed6\u4e0d\u884c。
  */
@@ -898,7 +902,7 @@ exports.getVideos = function (url, callback) {
 
 
 
-},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],17:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],18:[function(require,module,exports){
 /*  bilibli 
  *  @\u6731\u4e00
  */
@@ -966,7 +970,7 @@ exports.getVideos = function (url, callback) {
   })
 }
 
-},{"./getCookie":6,"./httpProxy":7,"./log":9,"./purl":13}],18:[function(require,module,exports){
+},{"./getCookie":6,"./httpProxy":8,"./log":10,"./purl":14}],19:[function(require,module,exports){
 /*  tudou 
  *  @\u6731\u4e00
  */
@@ -1000,7 +1004,7 @@ exports.getVideos = function (url, callback) {
     }
   })
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],19:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],20:[function(require,module,exports){
 /*  hunantv 
  *  @\u60c5\u8ff7\u6d77\u9f9fpizza
  */
@@ -1079,11 +1083,12 @@ exports.getVideos = function (url, callback) {
     }, 2000);
   }
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],20:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],21:[function(require,module,exports){
 /*  iqiyi 
  *  @\u6731\u4e00
  */
 var canPlayM3U8 = require('./canPlayM3U8')
+var hasFlash = require('./hasFlash')
 var queryString = require('./queryString')
 var getCookie = require('./getCookie')
 var ajax = require('./ajax')
@@ -1104,6 +1109,10 @@ exports.match = function (url) {
 }
 
 exports.getVideos = function (url, callback) {
+
+  log('\u56e0\u4e3a\u7231\u5947\u827a\u7684\u67d0\u4e9b\u539f\u56e0\u4e0d\u8ba9\u64ad, \u6240\u4ee5\u4f60\u70ed\u5c31\u70ed\u5427。');
+  return;
+
   var uid = ''
   try{
     uid = JSON.parse(getCookie('P00002')).uid
@@ -1116,36 +1125,36 @@ exports.getVideos = function (url, callback) {
 
   function getVideoURL () {
     var param = weorjjigh(tvId)
-  param.uid = uid
-  param.cupid = cupid
-  param.platForm = 'h5'
-  param.type = canPlayM3U8 ? 'm3u8' : 'mp4',
-  param.qypid = tvId + '_21'
-  ajax({
-    url: 'http://cache.m.iqiyi.com/jp/tmts/'+tvId+'/'+vid+'/',
-    jsonp: true,
-    param: param,
-    callback: function (rs) {
-      var source = []      
-      if (rs.data.vidl && rs.data.vidl[0] && rs.data.vidl[0].m3u) {
-        source = rs.data.vidl
-          .map(function (data) {
-            var vData = formatVd(data.vd)
-            vData.m3u = data.m3u
-            return vData;
-          })
-          .sort(function (dataA, dataB) {
-            return dataB.index - dataA.index
-          })
-          .map(function (data) {
-            return [data.text, data.m3u]
-          })
-      } else {
-        if (rs.data.m3u.length > 0) source = [['\u6807\u6e05', rs.data.m3u]]
+    param.uid = uid
+    param.cupid = cupid
+    param.platForm = 'h5'
+    param.type = canPlayM3U8 ? 'm3u8' : 'mp4',
+    param.qypid = tvId + '_21'
+    ajax({
+      url: 'http://cache.m.iqiyi.com/jp/tmts/'+tvId+'/'+vid+'/',
+      jsonp: true,
+      param: param,
+      callback: function (rs) {
+        var source = []      
+        if (rs.data.vidl && rs.data.vidl[0] && rs.data.vidl[0].m3u) {
+          source = rs.data.vidl
+            .map(function (data) {
+              var vData = formatVd(data.vd)
+              vData.m3u = data.m3u
+              return vData;
+            })
+            .sort(function (dataA, dataB) {
+              return dataB.index - dataA.index
+            })
+            .map(function (data) {
+              return [data.text, data.m3u]
+            })
+        } else {
+          if (rs.data.m3u.length > 0) source = [['\u6807\u6e05', rs.data.m3u]]
+        }
+        callback(source)
       }
-      callback(source)
-    }
-  })
+    })
   }
 
   if (window.weorjjigh) {
@@ -1164,7 +1173,7 @@ exports.getVideos = function (url, callback) {
   }
 }
 
-},{"./ajax":2,"./canPlayM3U8":3,"./getCookie":6,"./httpProxy":7,"./log":9,"./queryString":14}],21:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./getCookie":6,"./hasFlash":7,"./httpProxy":8,"./log":10,"./queryString":15}],22:[function(require,module,exports){
 /*  tudou 
  *  @\u6731\u4e00
  */
@@ -1222,7 +1231,7 @@ exports.getVideos = function (url, callback) {
   };
   canPlayM3U8 ? m3u8(callback) : mp4(callback)
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":9,"./seeker_youku":22}],22:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10,"./seeker_youku":23}],23:[function(require,module,exports){
 /*  youku 
  *  @\u6731\u4e00
  */
@@ -1631,7 +1640,7 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 exports.getVideos = function (url, callback) {
   parseYoukuCode(window.videoId, callback)
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":9}],23:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],24:[function(require,module,exports){
 module.exports = [
   require('./seeker_bilibili'),
   require('./seeker_youku'),
@@ -1643,4 +1652,4 @@ module.exports = [
   // ,require('./seeker_example')
 ]
 
-},{"./seeker_91porn":15,"./seeker_baidupan":16,"./seeker_bilibili":17,"./seeker_hunantv":19,"./seeker_iqiyi":20,"./seeker_tudou":21,"./seeker_youku":22}]},{},[1]);
+},{"./seeker_91porn":16,"./seeker_baidupan":17,"./seeker_bilibili":18,"./seeker_hunantv":20,"./seeker_iqiyi":21,"./seeker_tudou":22,"./seeker_youku":23}]},{},[1]);
