@@ -20,7 +20,8 @@
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",
     "chalk": "1.0.0",
-    "fd-gulp-chinese2unicode": "0.0.1"
+    "fd-gulp-chinese2unicode": "0.0.1",
+    "cheerio": "0.20.0"
   },
   "bugs": {
     "url": "https://github.com/zythum/mama2/issues"
