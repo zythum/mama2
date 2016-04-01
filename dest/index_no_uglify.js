@@ -126,7 +126,7 @@ if (matched === undefined) {
 }
 
 }
-},{"./createElement":4,"./flashBlocker":5,"./log":10,"./mamaKey":11,"./player":13,"./purl":14,"./seeker_flvsp":19,"./seekers":24}],2:[function(require,module,exports){
+},{"./createElement":4,"./flashBlocker":5,"./log":10,"./mamaKey":11,"./player":13,"./purl":14,"./seeker_flvsp":20,"./seekers":25}],2:[function(require,module,exports){
 /*  \uff03function ajax#
  *  < {
  *    url:          String   \u8bf7\u6c42\u5730\u5740
@@ -741,6 +741,19 @@ function queryString (obj) {
 }
 module.exports = queryString
 },{}],16:[function(require,module,exports){
+/*  115 vip only
+ *  @HugoLee 2016.4.1
+ */
+
+exports.match = function (url) {
+  return url.attr('source').indexOf('play.html?pickcode=') >= 0 || /^http\:\/\/115.com/.test(url.attr('source'))
+}
+exports.getVideos = function (url, callback) {
+	document.body.removeChild(document.getElementsByTagName("iframe")[0])
+  callback([["115\u8001\u53f8\u673a", "http://115.com/?ct=download&ac=video&pickcode="+url.data.param.query.pickcode]])
+}
+
+},{}],17:[function(require,module,exports){
 /*  91porn 
  *  @Snooze 2015-7-26
  */
@@ -797,7 +810,7 @@ exports.getVideos = function (url, callback) {
 
 
 
-},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],17:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],18:[function(require,module,exports){
 /*  \u767e\u5ea6\u76d8 
  *  @\u6731\u4e00 \u683c\u5f0f\u5173\u7cfb\u53ea\u80fd\u64ad\u653e\u53ef\u64ad\u653e\u7684\u683c\u5f0f。\u8fd9\u8fb9\u5f3a\u5236\u5224\u65admp4\u53ef\u64ad\u653e。\u5176\u4ed6\u4e0d\u884c。
  */
@@ -902,7 +915,7 @@ exports.getVideos = function (url, callback) {
 
 
 
-},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],18:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],19:[function(require,module,exports){
 /*  bilibli 
  *  @\u6731\u4e00
  */
@@ -970,7 +983,7 @@ exports.getVideos = function (url, callback) {
   })
 }
 
-},{"./getCookie":6,"./httpProxy":8,"./log":10,"./purl":14}],19:[function(require,module,exports){
+},{"./getCookie":6,"./httpProxy":8,"./log":10,"./purl":14}],20:[function(require,module,exports){
 /*  tudou 
  *  @\u6731\u4e00
  */
@@ -1004,7 +1017,7 @@ exports.getVideos = function (url, callback) {
     }
   })
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],20:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],21:[function(require,module,exports){
 /*  hunantv 
  *  @\u60c5\u8ff7\u6d77\u9f9fpizza
  */
@@ -1083,7 +1096,7 @@ exports.getVideos = function (url, callback) {
     }, 2000);
   }
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],21:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],22:[function(require,module,exports){
 /*  iqiyi 
  *  @\u6731\u4e00
  */
@@ -1173,7 +1186,7 @@ exports.getVideos = function (url, callback) {
   }
 }
 
-},{"./ajax":2,"./canPlayM3U8":3,"./getCookie":6,"./hasFlash":7,"./httpProxy":8,"./log":10,"./queryString":15}],22:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./getCookie":6,"./hasFlash":7,"./httpProxy":8,"./log":10,"./queryString":15}],23:[function(require,module,exports){
 /*  tudou 
  *  @\u6731\u4e00
  */
@@ -1231,7 +1244,7 @@ exports.getVideos = function (url, callback) {
   };
   canPlayM3U8 ? m3u8(callback) : mp4(callback)
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":10,"./seeker_youku":23}],23:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10,"./seeker_youku":24}],24:[function(require,module,exports){
 /*  youku 
  *  @\u6731\u4e00
  */
@@ -1640,7 +1653,7 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 exports.getVideos = function (url, callback) {
   parseYoukuCode(window.videoId, callback)
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],24:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],25:[function(require,module,exports){
 module.exports = [
   require('./seeker_bilibili'),
   require('./seeker_youku'),
@@ -1648,8 +1661,9 @@ module.exports = [
   require('./seeker_iqiyi'),
   require('./seeker_hunantv'),
   require('./seeker_baidupan'),
-  require('./seeker_91porn')
+  require('./seeker_91porn'),
+  require('./seeker_115')
   // ,require('./seeker_example')
 ]
 
-},{"./seeker_91porn":16,"./seeker_baidupan":17,"./seeker_bilibili":18,"./seeker_hunantv":20,"./seeker_iqiyi":21,"./seeker_tudou":22,"./seeker_youku":23}]},{},[1]);
+},{"./seeker_115":16,"./seeker_91porn":17,"./seeker_baidupan":18,"./seeker_bilibili":19,"./seeker_hunantv":21,"./seeker_iqiyi":22,"./seeker_tudou":23,"./seeker_youku":24}]},{},[1]);
