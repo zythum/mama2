@@ -1,12 +1,6 @@
-/*  115 vip
+/*  115 vip only
  *  @HugoLee 2016.4.1
  */
-
-var canPlayM3U8 = require('./canPlayM3U8')
-var queryString = require('./queryString')
-var ajax = require('./ajax')
-var httpProxy = require('./httpProxy')
-var log = require('./log')
 
 exports.match = function (url) {
   return url.attr('source').indexOf('play.html?pickcode=') >= 0 || /^http\:\/\/115.com/.test(url.attr('source'))
