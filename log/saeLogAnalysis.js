@@ -2,13 +2,15 @@
 
 let fs = require('fs');
 let url = require('url');
-let logFilePath = [].concat(process.argv).slice(2)[0]
-let logTypes = [].concat(process.argv).slice(3)
+let logFilePath = [].concat(process.argv).slice(2)[0];
+let logTypes = [].concat(process.argv).slice(3);
 
 function os(ua) {
-  function has(string) {
-    return ua.includes(string);
-  }
+  function has(string) { return ua.includes(string); }
+
+  if (has('WeChat')) return "Weixin app webview";
+  if (has('Weibo')) return "Weibo IOS webview";
+  if (has('_weibo_')) return "Weibo Android webview";
   if (has('PlayStation') || has('PS Vita')) return "PlayStation";
   if (has('Windows Phone')) return "Windows Phone";
   if (has('Windows')) return "Windows";
@@ -20,12 +22,8 @@ function os(ua) {
   if (has('Baiduspider')) return "Baiduspider";
   if (has('bingbot')) return "Bingbot";
   if (has('Mac OS X')) {
-    if (has('Chrome')) {
-      return 'Mac OS X Chrome';
-    }
-    if (has('Safari')) {
-      return 'Mac OS X Safari';
-    }
+    if (has('Chrome')) return 'Mac OS X Chrome';
+    if (has('Safari')) return 'Mac OS X Safari';
     return 'Mac OS X Other';
   }
   return ua;
