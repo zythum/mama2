@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>DefaultValue</key>
+		<string>http://zythum.sinaapp.com/mama2/dest/index.js</string>
+		<key>Key</key>
+		<string>serverURL</string>
+		<key>Password</key>
+		<false/>
+		<key>Secure</key>
+		<false/>
+		<key>Title</key>
+		<string>自定义解析服务器</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+</array>
+</plist>
