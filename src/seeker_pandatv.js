@@ -17,7 +17,7 @@ exports.getVideos = function (url, callback) {
     callback(false);
     return;
   }
-  
+
   var room_id = url.attr('path').match(/^\/([0-9]+)$/)[1]
   var m3u8_api = 'http://room.api.m.panda.tv/index.php?method=room.shareapi&roomid='
   httpProxy(
@@ -30,7 +30,12 @@ exports.getVideos = function (url, callback) {
           }
           jsonobj = eval(result)
           if(jsonobj.errno == 0 && jsonobj.data.videoinfo.address != ""){
-            callback([['未知', jsonobj.data.videoinfo.address]])
+            var arry = new Array()
+            var baseaddr = jsonobj.data.videoinfo.address;
+            arry.push(['超清', baseaddr.replace('_small\.m3u8', "\.m3u8")])
+            arry.push(['高清', baseaddr.replace('_small\.m3u8', "_mid\.m3u8")])
+            arry.push(['标清', baseaddr])
+            callback(arry)
           }else {
             callback(false)
           }
