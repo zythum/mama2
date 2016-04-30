@@ -74,5 +74,10 @@ module.exports = function() {
   var objects = document.getElementsByTagName('object');
   for(var i=0,len=objects.length; i<len; i++) objects[i] && parseFlash(objects[i]);
   for(var i=0,len=embeds.length; i<len; i++)  embeds[i] && parseFlash(embeds[i]);
+  
+  // http://www.bilibili.com/video/av135433/index_4.html
+  Array.prototype.slice.call(
+    document.querySelectorAll('iframe.player[src^="https://secure.bilibili.com"]')
+  ).forEach(function(x){createAPlaceHolder(x, x.offsetWidth, x.offsetHeight)});
 }
 // document.addEventListener("beforeload", handleBeforeLoadEvent, true);
