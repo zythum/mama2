@@ -14,6 +14,7 @@ __目前鹅厂视频－－腾讯视频已经原生支持 Video 播放了。大�
 + ~~爱奇艺-中国领先的视频门户 @朱一~~
 + 搜狐视频 @朱一
 + 芒果tv [@zhshipu](https://github.com/zhshipu)
++ 熊猫tv [@pczb](https://github.com/pczb)
 + 91porn 
 + 百度网盘 @朱一
 
