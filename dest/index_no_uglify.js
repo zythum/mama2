@@ -126,7 +126,7 @@ if (matched === undefined) {
 }
 
 }
-},{"./createElement":4,"./flashBlocker":5,"./log":10,"./mamaKey":11,"./player":13,"./purl":14,"./seeker_flvsp":19,"./seekers":24}],2:[function(require,module,exports){
+},{"./createElement":4,"./flashBlocker":5,"./log":10,"./mamaKey":11,"./player":13,"./purl":14,"./seeker_flvsp":19,"./seekers":25}],2:[function(require,module,exports){
 /*  \uff03function ajax#
  *  < {
  *    url:          String   \u8bf7\u6c42\u5730\u5740
@@ -1190,6 +1190,51 @@ exports.getVideos = function (url, callback) {
 }
 
 },{"./ajax":2,"./canPlayM3U8":3,"./getCookie":6,"./hasFlash":7,"./httpProxy":8,"./log":10,"./queryString":15}],22:[function(require,module,exports){
+/*  pandatv
+ *
+ *  @pczb
+ */
+var log       = require('./log')
+var canPlayM3U8 = require('./canPlayM3U8')
+var ajax = require('./ajax')
+var httpProxy = require('./httpProxy')
+
+exports.match = function () {
+  return /^http\:\/\/www\.panda\.tv\/[0-9]+$/.test(location.href)
+}
+
+exports.getVideos = function (url, callback) {
+  if(!canPlayM3U8){
+    log('use safari please')
+    callback(false);
+    return;
+  }
+
+  var room_id = url.attr('path').match(/^\/([0-9]+)$/)[1]
+  var m3u8_api = 'http://room.api.m.panda.tv/index.php?method=room.shareapi&roomid='
+  httpProxy(
+        m3u8_api + room_id,
+        "GET",
+        {},
+        function(result){
+          if(result === -1){
+            callback(false)
+          }
+          jsonobj = eval(result)
+          if(jsonobj.errno == 0 && jsonobj.data.videoinfo.address != ""){
+            var arry = new Array()
+            var baseaddr = jsonobj.data.videoinfo.address;
+            arry.push(['\u8d85\u6e05', baseaddr.replace('_small\.m3u8', "\.m3u8")])
+            arry.push(['\u9ad8\u6e05', baseaddr.replace('_small\.m3u8', "_mid\.m3u8")])
+            arry.push(['\u6807\u6e05', baseaddr])
+            callback(arry)
+          }else {
+            callback(false)
+          }
+        })
+}
+
+},{"./ajax":2,"./canPlayM3U8":3,"./httpProxy":8,"./log":10}],23:[function(require,module,exports){
 /*  tudou 
  *  @\u6731\u4e00
  */
@@ -1247,7 +1292,7 @@ exports.getVideos = function (url, callback) {
   };
   canPlayM3U8 ? m3u8(callback) : mp4(callback)
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":10,"./seeker_youku":23}],23:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10,"./seeker_youku":24}],24:[function(require,module,exports){
 /*  youku 
  *  @\u6731\u4e00
  */
@@ -1656,7 +1701,7 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 exports.getVideos = function (url, callback) {
   parseYoukuCode(window.videoId, callback)
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],24:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],25:[function(require,module,exports){
 module.exports = [
   require('./seeker_bilibili'),
   require('./seeker_youku'),
@@ -1664,8 +1709,9 @@ module.exports = [
   require('./seeker_iqiyi'),
   require('./seeker_hunantv'),
   require('./seeker_baidupan'),
-  require('./seeker_91porn')
+  require('./seeker_91porn'),
+  require('./seeker_pandatv')
   // ,require('./seeker_example')
 ]
 
-},{"./seeker_91porn":16,"./seeker_baidupan":17,"./seeker_bilibili":18,"./seeker_hunantv":20,"./seeker_iqiyi":21,"./seeker_tudou":22,"./seeker_youku":23}]},{},[1]);
+},{"./seeker_91porn":16,"./seeker_baidupan":17,"./seeker_bilibili":18,"./seeker_hunantv":20,"./seeker_iqiyi":21,"./seeker_pandatv":22,"./seeker_tudou":23,"./seeker_youku":24}]},{},[1]);
