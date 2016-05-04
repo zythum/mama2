@@ -4,7 +4,7 @@ var createElement = require('./createElement')
 var MAMAPlayer    = require('./player')
 var log           = require('./log')
 var purl          = require('./purl')
-var mamaKey       = require('./mamaKey')
+var mamaKey       = require('./mamakey')
 var seekers       = require('./seekers')
 var flvsp         = require('./seeker_flvsp');
 var matched
@@ -126,7 +126,7 @@ if (matched === undefined) {
 }
 
 }
-},{"./createElement":4,"./flashBlocker":5,"./log":10,"./mamaKey":11,"./player":13,"./purl":14,"./seeker_flvsp":19,"./seekers":25}],2:[function(require,module,exports){
+},{"./createElement":4,"./flashBlocker":5,"./log":10,"./mamakey":11,"./player":13,"./purl":14,"./seeker_flvsp":19,"./seekers":25}],2:[function(require,module,exports){
 /*  \uff03function ajax#
  *  < {
  *    url:          String   \u8bf7\u6c42\u5730\u5740
