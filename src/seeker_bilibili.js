@@ -7,6 +7,7 @@ var httpProxy = require('./httpProxy')
 var getCookie = require('./getCookie')
 
 function pad(num, n) { 
+  if (num.length >= n) return num;
   return (Array(n).join(0) + num).slice(-n)
 }
 
@@ -59,7 +60,7 @@ exports.getVideos = function (url, callback) {
               return {
                 time: parseFloat(p[0]),
                 pos:  p[1],
-                color: '#' + pad((p[3] | 0).toString(16), 6),
+                color: '#' + pad((p[3] || 0).toString(16), 6),
                 text: comment['#text']
               }
             }).sort(function (a, b) {
