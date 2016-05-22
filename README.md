@@ -17,6 +17,7 @@ __目前鹅厂视频－－腾讯视频已经原生支持 Video 播放了。大�
 + 熊猫tv [@pczb](https://github.com/pczb)
 + 91porn 
 + 百度网盘 @朱一
++ 音悦台 [@mhcgrq](https://github.com/mhcgrq)
 
 感谢 [一环同学](http://weibo.com/justashit)提供的缺省解析服务（如果不是上面的网站，能播放的都是一环同学的功劳。）
 
