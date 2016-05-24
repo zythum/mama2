@@ -7,6 +7,7 @@ module.exports = [
   require('./seeker_baidupan'),
   require('./seeker_91porn'),
   require('./seeker_pandatv'),
-  require('./seeker_yinyuetai')
+  require('./seeker_yinyuetai'),
+  require('./seeker_douyu')
   // ,require('./seeker_example')
 ]
