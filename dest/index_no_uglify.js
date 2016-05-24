@@ -126,7 +126,7 @@ if (matched === undefined) {
 }
 
 }
-},{"./createElement":4,"./flashBlocker":5,"./log":10,"./mamakey":11,"./player":13,"./purl":14,"./seeker_flvsp":19,"./seekers":26}],2:[function(require,module,exports){
+},{"./createElement":4,"./flashBlocker":5,"./log":10,"./mamakey":11,"./player":13,"./purl":14,"./seeker_flvsp":20,"./seekers":27}],2:[function(require,module,exports){
 /*  \uff03function ajax#
  *  < {
  *    url:          String   \u8bf7\u6c42\u5730\u5740
@@ -988,6 +988,28 @@ exports.getVideos = function (url, callback) {
 }
 
 },{"./getCookie":6,"./httpProxy":8,"./log":10,"./purl":14}],19:[function(require,module,exports){
+/*  douyu
+ *  @\u6731\u4e00
+ */
+var canPlayM3U8 = require('./canPlayM3U8')
+var ajax        = require('./ajax')
+var log         = require('./log')
+var httpProxy   = require('./httpProxy')
+
+exports.match = function (url) {
+  return canPlayM3U8 && url.attr('host').indexOf('douyu') >= 0 && window.$ROOM && window.$ROOM.room_id
+}
+
+exports.getVideos = function (url, callback) {
+  httpProxy(
+    'http://m.douyu.com/html5/live', 
+    'get', 
+    {roomId: window.$ROOM.room_id},
+  function (rs) {
+    callback([["\u6597\u9c7c", rs.data.hls_url]])
+  })
+}
+},{"./ajax":2,"./canPlayM3U8":3,"./httpProxy":8,"./log":10}],20:[function(require,module,exports){
 /*  tudou 
  *  @\u6731\u4e00
  */
@@ -1021,7 +1043,7 @@ exports.getVideos = function (url, callback) {
     }
   })
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],20:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],21:[function(require,module,exports){
 /*  hunantv 
  *  @\u60c5\u8ff7\u6d77\u9f9fpizza
  */
@@ -1100,7 +1122,7 @@ exports.getVideos = function (url, callback) {
     }, 2000);
   }
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],21:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],22:[function(require,module,exports){
 /*  iqiyi 
  *  @\u6731\u4e00
  */
@@ -1190,7 +1212,7 @@ exports.getVideos = function (url, callback) {
   }
 }
 
-},{"./ajax":2,"./canPlayM3U8":3,"./getCookie":6,"./hasFlash":7,"./httpProxy":8,"./log":10,"./queryString":15}],22:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./getCookie":6,"./hasFlash":7,"./httpProxy":8,"./log":10,"./queryString":15}],23:[function(require,module,exports){
 /*  pandatv
  *
  *  @pczb
@@ -1235,7 +1257,7 @@ exports.getVideos = function (url, callback) {
         })
 }
 
-},{"./ajax":2,"./canPlayM3U8":3,"./httpProxy":8,"./log":10}],23:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./httpProxy":8,"./log":10}],24:[function(require,module,exports){
 /*  tudou 
  *  @\u6731\u4e00
  */
@@ -1293,7 +1315,7 @@ exports.getVideos = function (url, callback) {
   };
   canPlayM3U8 ? m3u8(callback) : mp4(callback)
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":10,"./seeker_youku":25}],24:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10,"./seeker_youku":26}],25:[function(require,module,exports){
 var log = require('./log');
 var ajax = require(('./ajax'));
 
@@ -1345,7 +1367,7 @@ exports.getVideos = function (url, callback) {
 // GET http://120.192.249.220:9090/data4/1/c/3a/c/a38df997fecc82d251482b4bcf6c3ac1/hc.yinyuetai.com/CDD8015436C4EAFED49290FE1AA16449.flv?type=data 404 (Not Found)
 // index.js:480 Uncaught (in promise) DOMException: The element has no supported sources.
 
-},{"./ajax":2,"./log":10}],25:[function(require,module,exports){
+},{"./ajax":2,"./log":10}],26:[function(require,module,exports){
 /*  youku 
  *  @\u6731\u4e00
  */
@@ -1754,7 +1776,7 @@ var parseYoukuCode = exports.parseYoukuCode = function (_id, callback) {
 exports.getVideos = function (url, callback) {
   parseYoukuCode(window.videoId, callback)
 }
-},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],26:[function(require,module,exports){
+},{"./ajax":2,"./canPlayM3U8":3,"./log":10}],27:[function(require,module,exports){
 module.exports = [
   require('./seeker_bilibili'),
   require('./seeker_youku'),
@@ -1764,8 +1786,9 @@ module.exports = [
   require('./seeker_baidupan'),
   require('./seeker_91porn'),
   require('./seeker_pandatv'),
-  require('./seeker_yinyuetai')
+  require('./seeker_yinyuetai'),
+  require('./seeker_douyu')
   // ,require('./seeker_example')
 ]
 
-},{"./seeker_91porn":16,"./seeker_baidupan":17,"./seeker_bilibili":18,"./seeker_hunantv":20,"./seeker_iqiyi":21,"./seeker_pandatv":22,"./seeker_tudou":23,"./seeker_yinyuetai":24,"./seeker_youku":25}]},{},[1]);
+},{"./seeker_91porn":16,"./seeker_baidupan":17,"./seeker_bilibili":18,"./seeker_douyu":19,"./seeker_hunantv":21,"./seeker_iqiyi":22,"./seeker_pandatv":23,"./seeker_tudou":24,"./seeker_yinyuetai":25,"./seeker_youku":26}]},{},[1]);
