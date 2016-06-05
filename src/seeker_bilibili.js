@@ -1,4 +1,4 @@
-/*  bilibli 
+/*  bilibli
  * appkey from https://github.com/zacyu/bilibili-helper/
  *  @朱一
  */
@@ -7,7 +7,7 @@ var log       = require('./log')
 var httpProxy = require('./httpProxy')
 var getCookie = require('./getCookie')
 
-function pad(num, n) { 
+function pad(num, n) {
   return (Array(n).join(0) + num).slice(-n)
 }
 
@@ -22,10 +22,10 @@ exports.getVideos = function (url, callback) {
     pageMatch = url.attr('file').match(/^index\_(\d+)\.html$/)
     return pageMatch ? pageMatch[1] : 1
   }())
-  
+
   httpProxy(
-    'http://www.bilibili.com/m/html5', 
-    'get', 
+    'http://www.bilibili.com/m/html5',
+    'get',
     {aid: aid, page: page, sid: getCookie('sid')},
   function (rs) {
     if (rs && rs.src) {
@@ -38,10 +38,10 @@ exports.getVideos = function (url, callback) {
 
       httpProxy(
         'http://interface.bilibili.com/playurl',
-        'get', 
-        {otype: 'json', appkey: '8e9fc618fbd41e28', cid: cid, quality: 4, type: 'mp4'},
+        'get',
+        {otype: 'json', appkey: 'f3bb208b3d081dc8', cid: cid, quality: 4, type: 'mp4'},
       function (rs) {
-        if (rs && rs.durl && rs.durl[0] && rs.durl[0].backup_url && rs.durl[0].backup_url[0]) {          
+        if (rs && rs.durl && rs.durl[0] && rs.durl[0].backup_url && rs.durl[0].backup_url[0]) {
           source.unshift(['bilibili HD', rs.durl[0].backup_url[0]])
         } else if (rs && rs.durl && rs.durl[0] && rs.durl[0].url) {
           source.unshift(['bilibili HD', rs.durl[0].url])
