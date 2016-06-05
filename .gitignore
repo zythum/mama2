@@ -1,2 +1,4 @@
-/node_modules
+node_modules
+dest/*
+!dest/README.md
 npm-debug.log
