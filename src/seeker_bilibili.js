@@ -12,7 +12,6 @@ function pad(num, n) {
 }
 
 exports.match = function (url) {
-  // return url.attr('host').indexOf('bilibili') >= 0 && /^\/video\/av\d+\/$/.test(url.attr('directory'))
   return url.attr('host').indexOf('bilibili') >= 0 && (/^\/video\/av\d+\/$/.test(url.attr('directory')) || /^\/anime\/v\/\d+$/.test(url.attr('directory')));
 }
 
