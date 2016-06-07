@@ -12,17 +12,11 @@ function pad(num, n) {
 }
 
 exports.match = function (url) {
-  return url.attr('host').indexOf('bilibili') >= 0 && /^\/video\/av\d+\/$/.test(url.attr('directory'))
+  // return url.attr('host').indexOf('bilibili') >= 0 && /^\/video\/av\d+\/$/.test(url.attr('directory'))
+  return url.attr('host').indexOf('bilibili') >= 0 && (/^\/video\/av\d+\/$/.test(url.attr('directory')) || /^\/anime\/v\/\d+$/.test(url.attr('directory')));
 }
 
-exports.getVideos = function (url, callback) {
-  log('开始解析bilibli视频地址')
-  var aid = url.attr('directory').match(/^\/video\/av(\d+)\/$/)[1]
-  var page = (function () {
-    pageMatch = url.attr('file').match(/^index\_(\d+)\.html$/)
-    return pageMatch ? pageMatch[1] : 1
-  }())
-
+function extract_video (aid, page) {
   httpProxy(
     'http://www.bilibili.com/m/html5',
     'get',
@@ -81,3 +75,34 @@ exports.getVideos = function (url, callback) {
     }
   })
 }
+
+exports.getVideos = function (url, callback) {
+  log('开始解析bilibli视频地址')
+  var page = (function () {
+    pageMatch = url.attr('file').match(/^index\_(\d+)\.html$/)
+    return pageMatch ? pageMatch[1] : 1
+  }())
+
+  if (/^\/anime\/v\/\d+$/.test(url.attr('directory'))) {
+    log('开始解析anime地址');
+    var episode_id = url.attr('directory').match(/^\/anime\/v\/(\d+)$/)[1];
+    log('episode_id = ' + episode_id);
+    httpProxy(
+      'http://bangumi.bilibili.com/web_api/episode/get_source',
+      'get',
+      {'episode_id': episode_id},
+      function (res){
+        console.log(res);
+        log('success get aid: ' + res.result.aid);
+        if(res && res.code === 0) {
+          var aid = res.result.aid;
+          extract_video(aid, page);
+        }
+      });
+  } else {
+    var aid = url.attr('directory').match(/^\/video\/av(\d+)\/$/)[1];
+    extract_video(aid, page);
+  }
+
+
+  }
