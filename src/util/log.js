@@ -3,12 +3,13 @@
  *  log, 会在页面和console中输出log
  */
 
-var createElement = require('./createElement')
-var MAMALogDOM
-var logTimer
-var logDelay = 10000
+import {createElement} from './createElement'
 
-function log (msg, delay) {
+let MAMALogDOM
+let logTimer
+const logDelay = 10000
+
+export function log (msg, delay) {
   if ( MAMALogDOM === undefined ) {
     MAMALogDOM = createElement('div', {
       style: {
@@ -29,8 +30,7 @@ function log (msg, delay) {
   console && console.log && console.log('%c MAMA2 %c %s', 'background:#24272A; color:#ffffff', '', msg)
 
   document.body.appendChild(MAMALogDOM)
-  logTimer = setTimeout(function () {
+  logTimer = setTimeout(()=>{
     document.body.removeChild(MAMALogDOM)
   }, delay*1000 || logDelay)
 }
-module.exports = log

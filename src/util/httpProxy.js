@@ -12,13 +12,12 @@
  *  用于发起跨域的ajax请求。既接口返回跨域又不支持jsonp协议的
  */
 
-var createElement = require('./createElement')
-var ajax          = require('./ajax')
-var queryString   = require('./queryString')
+import {ajax}        from './ajax'
+import {queryString} from './queryString'
 
-var proxyUrl = 'http://zythum.sinaapp.com/mama2/proxy.php'
+const proxyUrl = 'http://zythum.sinaapp.com/mama2/proxy.php'
 
-function httpProxy (url, type, params, callback, opts) {
+export function httpProxy (url, type, params, callback, opts) {
   opts = opts || {}
   ajax({
     url: proxyUrl,
@@ -37,5 +36,3 @@ function httpProxy (url, type, params, callback, opts) {
     context: opts.context
   })
 }
-
-module.exports = httpProxy

@@ -1,15 +1,14 @@
 /*  tudou 
  *  @朱一
  */
-var canPlayM3U8 = require('./canPlayM3U8')
-var ajax        = require('./ajax')
-var log         = require('./log')
+import {canPlayM3U8, ajax, log} from './util/index'
+export default {match, getVideos}
 
-exports.match = function (url) {
+export function match (url) {
   return true;
 }
 
-exports.getVideos = function (url, callback) {
+export function getVideos (url, callback) {
   ajax({
     url: 'http://acfunfix.sinaapp.com/mama.php',
     jsonp: true,

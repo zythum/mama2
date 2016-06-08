@@ -1,22 +1,22 @@
 /*  91porn 
  *  @Snooze 2015-7-26
  */
-var canPlayM3U8 = require('./canPlayM3U8')
-var ajax        = require('./ajax')
-var log         = require('./log')
+import {canPlayM3U8, ajax, log} from './util/index'
 
-exports.match = function (url) {
+export default {match, getVideos}
+
+function match (url) {
   if (window.so && window.so.variables) {
     var fileId = window.so.variables.file
     var secCode = window.so.variables.seccode
     var max_vid = window.so.variables.max_vid
-    return !!fileId & !!secCode & !!max_vid & 
+    return !!fileId & !!secCode & !!max_vid &
       /view_video\.php\?viewkey/.test( url.attr('source') )
   }
   return false;
 }
 
-exports.getVideos = function (url, callback) {  
+function getVideos (url, callback) {
   //var mediaSpaceHTML = document.getElementById("mediaspace").innerHTML
   //var fileId = /file','(.*?)'/i.exec(mediaSpaceHTML)[1]
   //var secCode = /seccode','(.*?)'/i.exec(mediaSpaceHTML)[1]
@@ -24,7 +24,7 @@ exports.getVideos = function (url, callback) {
   var fileId = window.so.variables.file
   var secCode = window.so.variables.seccode
   var max_vid = window.so.variables.max_vid
-  
+
 
   var mp4 = function(callback){
     ajax({
@@ -50,6 +50,3 @@ exports.getVideos = function (url, callback) {
   };
   mp4(callback)
 }
-
-
-

@@ -9,24 +9,23 @@
     "url": "https://github.com/zythum/mama2.git"
   },
   "dependencies": {
-    "gulp": "3.9.0",
-    "gulp-uglify": "1.1.0",
-    "gulp-webserver": "0.9.0",
-    "gulp-util": "3.0.4",
-    "gulp-sourcemaps": "1.5.2",
-    "gulp-rename": "1.2.2",
-    "browserify": "10.1.3",
-    "watchify": "3.2.1",
-    "vinyl-buffer": "1.0.0",
-    "vinyl-source-stream": "1.1.0",
-    "chalk": "1.0.0",
-    "fd-gulp-chinese2unicode": "0.0.1"
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-runtime": "^5.8.0",
+    "babel-preset-es2015": "^6.9.0",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.1"
+  },
+  "babel": {
+    "presets": ["es2015"]
   },
   "bugs": {
     "url": "https://github.com/zythum/mama2/issues"
   },
   "homepage": "https://github.com/zythum/mama2",
   "scripts": {
-    "start": "gulp"
+    "start": "npm run dev & npm run httpserver",
+    "dev": "webpack --watch --config webpack.dev.config.js",
+    "httpserver": "webpack-dev-server --content-base ./ --host 127.0.0.1 --port 8000"
   }
 }

@@ -1,36 +1,36 @@
 /*  ＃function jsonp#
  *  jsonp方法。推荐使用ajax方法。ajax包含了jsonp
  */
-var createElement = require('./createElement')
-var noop          = require('./noop')
+import {createElement} from './createElement'
+import {noop}          from './noop'
 
-var callbackPrefix = 'MAMA2_HTTP_JSONP_CALLBACK'
-var callbackCount  = 0
-var timeoutDelay   = 10000
+const callbackPrefix = 'MAMA2_HTTP_JSONP_CALLBACK'
+const timeoutDelay = 10000
+let callbackCount = 0
 
 function callbackHandle () {
   return callbackPrefix + callbackCount++
 }
 
-function jsonp (url, callback, callbackKey) {
+export function jsonp (url, callback, callbackKey) {
 
   callbackKey = callbackKey || 'callback'
 
-  var _callbackHandle = callbackHandle()  
-  window[_callbackHandle] = function (rs) {
+  const _callbackHandle = callbackHandle()
+  
+  window[_callbackHandle] = (rs) => {
     clearTimeout(timeoutTimer)
     window[_callbackHandle] = noop
     callback(rs)
     document.body.removeChild(script)
   }
-  var timeoutTimer = setTimeout(function () {
+
+  let timeoutTimer = setTimeout( () => {
     window[_callbackHandle](-1)
   }, timeoutDelay)
 
-  var script = createElement('script', {
+  let script = createElement('script', {
     appendTo: document.body,
     src: url + (url.indexOf('?') >= 0 ? '&' : '?') + callbackKey + '=' + _callbackHandle
   })
 }
-
-module.exports = jsonp

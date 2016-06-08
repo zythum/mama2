@@ -2,26 +2,24 @@
  * appkey from https://github.com/zacyu/bilibili-helper/
  *  @朱一
  */
-var purl      = require('./purl')
-var log       = require('./log')
-var httpProxy = require('./httpProxy')
-var getCookie = require('./getCookie')
+import { log, httpProxy, getCookie } from './util/index'
+export default {match, getVideos}
 
 function pad(num, n) {
   return (Array(n).join(0) + num).slice(-n)
 }
 
-exports.match = function (url) {
+function match (url) {
   return url.attr('host').indexOf('bilibili') >= 0 && /^\/video\/av\d+\/$/.test(url.attr('directory'))
 }
 
-exports.getVideos = function (url, callback) {
+function getVideos (url, callback) {
   log('开始解析bilibli视频地址')
-  var aid = url.attr('directory').match(/^\/video\/av(\d+)\/$/)[1]
-  var page = (function () {
-    pageMatch = url.attr('file').match(/^index\_(\d+)\.html$/)
+  let aid = url.attr('directory').match(/^\/video\/av(\d+)\/$/)[1]
+  let page = (()=>{
+    let pageMatch = url.attr('file').match(/^index\_(\d+)\.html$/)
     return pageMatch ? pageMatch[1] : 1
-  }())
+  })()
 
   httpProxy(
     'http://www.bilibili.com/m/html5',
@@ -30,10 +28,10 @@ exports.getVideos = function (url, callback) {
   function (rs) {
     if (rs && rs.src) {
       log('获取到<a href="'+rs.src+'">视频地址</a>, 并开始解析bilibli弹幕')
-      var source = [ ['bilibili', rs.src] ]
+      let source = [ ['bilibili', rs.src] ]
 
-      var commentSrc = rs.cid
-      var cid = commentSrc.split('/')
+      let commentSrc = rs.cid
+      let cid = commentSrc.split('/')
       cid = cid[cid.length - 1].split('.')[0]
 
       httpProxy(
@@ -49,9 +47,9 @@ exports.getVideos = function (url, callback) {
 
         httpProxy(commentSrc, 'get', {}, function (rs) {
           if (rs && rs.i) {
-            var comments = [].concat(rs.i.d || [])
+            let comments = [].concat(rs.i.d || [])
             comments = comments.map(function (comment) {
-              var p = comment['@p'].split(',')
+              let p = comment['@p'].split(',')
               switch (p[1] | 0) {
                 case 4:  p[1] = 'bottom'; break
                 case 5:  p[1] =  'top'; break

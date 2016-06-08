@@ -10,9 +10,9 @@
  *  用于发起ajax或者jsonp请求
  */
 
-var jsonp       = require('./jsonp')
-var noop        = require('./noop')
-var queryString = require('./queryString')
+import {jsonp}       from './jsonp'
+import {noop}        from './noop'
+import {queryString} from './queryString'
 
 function defalutOption (option, defalutValue) {
   return option === undefined ? defalutValue : option
@@ -23,13 +23,13 @@ function joinUrl (url, queryString) {
   return url + (url.indexOf('?') === -1 ? '?' : '&') + queryString
 }
 
-function ajax (options) {
-  var url         = defalutOption(options.url, '')
-  var query       = queryString( defalutOption(options.param, {}) )
-  var method      = defalutOption(options.method, 'GET')
-  var callback    = defalutOption(options.callback, noop)
-  var contentType = defalutOption(options.contentType, 'json')
-  var context     = defalutOption(options.context, null)
+export function ajax (options) {
+  let url         = defalutOption(options.url, '')
+  let query       = queryString( defalutOption(options.param, {}) )
+  let method      = defalutOption(options.method, 'GET')
+  let callback    = defalutOption(options.callback, noop)
+  let contentType = defalutOption(options.contentType, 'json')
+  let context     = defalutOption(options.context, null)
 
   if (options.jsonp) {
     return jsonp(
@@ -39,7 +39,7 @@ function ajax (options) {
     )
   }
 
-  var xhr = new XMLHttpRequest()
+  let xhr = new XMLHttpRequest()
   if (method.toLowerCase() === 'get') {
     url = joinUrl(url, query)
     query = ''
@@ -47,10 +47,10 @@ function ajax (options) {
   xhr.open(method, url, true)
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
   xhr.send(query)
-  xhr.onreadystatechange = function () {
+  xhr.onreadystatechange = () => {
     if (xhr.readyState === 4 ) {
       if (xhr.status === 200) {
-        var data = xhr.responseText
+        let data = xhr.responseText
         if (contentType.toLowerCase() === 'json') {
           try {
             data = JSON.parse(data)
@@ -65,4 +65,3 @@ function ajax (options) {
     }
   }
 }
-module.exports = ajax;

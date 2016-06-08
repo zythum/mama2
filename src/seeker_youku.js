@@ -1,66 +1,71 @@
-/*  youku 
+/*  youku
  *  @朱一
  */
-var canPlayM3U8 = require('./canPlayM3U8')
-var ajax        = require('./ajax')
-var log         = require('./log')
+import {canPlayM3U8, ajax, log} from './util/index'
+export default {match, getVideos}
 
+const dic = [19, 1, 4, 7, 30, 14, 28, 8, 24, 17, 6, 35, 34, 16, 9, 10, 13,
+  22, 32, 29, 31, 21, 18, 3, 2, 23, 25, 27, 11, 20, 5, 15, 12, 0, 33, 26]
+const mk = {a3: 'b4et', a4: 'boa4'}
 
-var dic = [19, 1, 4, 7, 30, 14, 28, 8, 24, 17, 6, 35, 34, 16, 9, 10, 13, 22, 32, 29, 31, 21, 18, 3, 2, 23, 25, 27, 11, 20, 5, 15, 12, 0, 33, 26]
-var mk = {a3: 'b4et', a4: 'boa4'}
-var userCache = { a1: "4", a2: "1" }
+let userCache = { a1: '4', a2: '1' }
 
-function urlParameter (query) {
-    var search = []
-    for (var item in query) search.push(item + "=" + query[item])
-    return search.join("&")
-}
-
-exports.match = function (url) {
-  return /v\.youku\.com/.test(url.attr('host')) && !!window.videoId
-}
-exports.parseYoukuCode = function (videoId, callback) {
+export function parseYoukuCode (videoId, callback) {
   ajax({
-    url: 'http://play.youku.com/play/get.json?vid=' + videoId + '&ct=12', jsonp: true,
-    callback: function (param) {
+    url: `http://play.youku.com/play/get.json?vid=${videoId}&ct=12`, jsonp: true,
+    callback: (param) => {
       if(param == -1) log('解析youku视频地址失败', 2)
-      var data = param.data;            
-      
-      var sid_token = rc4(translate(mk.a3 + "o0b" + userCache.a1, dic).toString(), decode64(data.security.encrypt_string)).split("_");
-      userCache.sid = sid_token[0];
-      userCache.token = sid_token[1]; 
+      let data = param.data
+
+      ;[userCache.sid, userCache.token] = rc4(
+        translate(`${mk.a3}o0b${userCache.a1}`, dic).toString(),
+        decode64(data.security.encrypt_string)
+      ).split("_")
 
       if ( canPlayM3U8 ) {
-        var urlquery = {
+        let urlquery = {
           vid: window.videoId,
           type: '[[type]]',
           ts: parseInt((new Date).getTime() / 1e3),
           keyframe: 0,
-          ep: encodeURIComponent(encode64(rc4(translate(mk.a4 + "poz" + userCache.a2, dic).toString(), userCache.sid + "_" + videoId + "_" + userCache.token))),
+          ep: encodeURIComponent(encode64(rc4(
+            translate(`${mk.a4}poz${userCache.a2}`, dic).toString(),
+            `${userCache.sid}_${videoId}_${userCache.token}`
+          ))),
           sid: userCache.sid,
           token: userCache.token,
           ctype: 12,
           ev: 1,
           oip: data.security.ip,
-          client_id: "youkumobileplaypage"
+          client_id: 'youkumobileplaypage'
         }
 
-        var videoSource = "http://pl.youku.com/playlist/m3u8?" + urlParameter(urlquery);
+        let videoSource = 'http://pl.youku.com/playlist/m3u8?' + urlParameter(urlquery);
         callback([
           ['超清', videoSource.replace('[[type]]', 'hd2')],
           ['高清', videoSource.replace('[[type]]', 'mp4')],
           ['标清', videoSource.replace('[[type]]', 'flv')]
         ])
       } else {
-        var playListData = new PlayListData(data, data.stream, 'mp4')
-        console.log(playListData._videoSegsDic.streams)
+        let playListData = new PlayListData(data, data.stream, 'mp4')
         callback([['标清', playListData._videoSegsDic.streams['guoyu']['3gphd'][0].src]])
       }
     }
   })
 }
-exports.getVideos = function (url, callback) {
+
+function match (url) {
+  return /v\.youku\.com/.test(url.attr('host')) && !!window.videoId
+}
+
+function getVideos (url, callback) {
   exports.parseYoukuCode(window.videoId, callback)
+}
+
+function urlParameter (query) {
+    let search = []
+    for (let item in query) search.push(item + "=" + query[item])
+    return search.join("&")
 }
 
 //优酷自己加密算法
@@ -187,20 +192,20 @@ function PlayListData (a, b, c) {
           if (null == w)
             break;
           var x = {};
-          x.no = v, 
-          x.size = w.size, 
-          x.seconds = Number(w.total_milliseconds_video) / 1e3, 
-          x.milliseconds_video = Number(o.milliseconds_video) / 1e3, 
-          x.key = w.key, x.fileId = this.getFileId(o.stream_fileid, v), 
-          x.src = this.getVideoSrc(j, v, a, o.stream_type, x.fileId), 
-          x.type = p, 
+          x.no = v,
+          x.size = w.size,
+          x.seconds = Number(w.total_milliseconds_video) / 1e3,
+          x.milliseconds_video = Number(o.milliseconds_video) / 1e3,
+          x.key = w.key, x.fileId = this.getFileId(o.stream_fileid, v),
+          x.src = this.getVideoSrc(j, v, a, o.stream_type, x.fileId),
+          x.type = p,
           u.push(x)
         }
         l[p] = u
       }
     }
     var y = this.langCodeToCN(k).key;
-    f.logos[y] = m, f.streams[y] = l, f.typeArr[y] = n        
+    f.logos[y] = m, f.streams[y] = l, f.typeArr[y] = n
   }
   this._videoSegsDic = f, this._videoSegsDic.lang = this.langCodeToCN(e[0]).key
 }
@@ -404,7 +409,6 @@ RandomProxy.prototype = {
     var q = "";
     c.show && (q = c.show.pay ? "&ypremium=1" : "&ymovie=1");
     var r = "/player/getFlvPath/sid/" + userCache.sid + "_" + n + "/st/" + m + "/fileid/" + e + "?K=" + p + "&hd=" + k + "&myp=0&ts=" + o + "&ypp=0" + q,
-      s = [19, 1, 4, 7, 30, 14, 28, 8, 24, 17, 6, 35, 34, 16, 9, 10, 13, 22, 32, 29, 31, 21, 18, 3, 2, 23, 25, 27, 11, 20, 5, 15, 12, 0, 33, 26],
       t = encodeURIComponent(encode64(rc4(translate(mk.a4 + "poz" + userCache.a2, dic).toString(), userCache.sid + "_" + e + "_" + userCache.token)));
     return r += "&ep=" + t, r += "&ctype=12", r += "&ev=1", r += "&token=" + userCache.token, r += "&oip=" + this._ip, r += (f ? "/password/" + f : "") + (g ? g : ""), r = "http://k.youku.com" + r
   }

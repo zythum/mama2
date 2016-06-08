@@ -1,23 +1,52 @@
-var flashBlocker  = require('./flashBlocker')
-var createElement = require('./createElement')
-var MAMAPlayer    = require('./player')
-var log           = require('./log')
-var purl          = require('./purl')
-var mamaKey       = require('./mamakey')
-var seekers       = require('./seekers')
-var flvsp         = require('./seeker_flvsp');
-var matched
+import flashBlocker  from './flashBlocker'
+import MAMAPlayer    from './player'
+import mamaKey       from './mamakey'
+import * as seekers  from './seekers'
+import flvsp         from './seeker_flvsp'
+import {
+  createElement,
+  log,
+  purl
+} from './util/index'
 
-if (window[mamaKey] != true) {
+if (window[mamaKey] = true) {
+  let matched
+  let url = purl(location.href)
+  if (url.attr('host') === 'zythum.sinaapp.com' &&
+    url.attr('directory') === '/mama2/ps4/' && url.param('url') ) {
+    url = purl(url.param('url'))
+  }
+
+  for (let seekerName in seekers) {
+    let seeker = seekers[seekerName]
+    if (matched === true) break;
+    if (!!seeker.match(url) === true) {
+      log('开始解析内容地址')
+      matched = true
+      seeker.getVideos(url, seeked)
+    }
+  }
+
+  if (matched === undefined) {
+    log('尝试使用<a target="_blank" href="http://weibo.com/justashit">一环同学</a>提供的解析服务', 2)
+    flvsp.getVideos(url, seeked)
+  }
+}
 
 function seeked (source, comments) {
   if (!source) {
     log('解析内容地址失败', 2)
     delete window[mamaKey]
     return
-  } 
-  log('解析内容地址完成'+source.map(function (i) {return '<a href="'+i[1]+'" target="_blank">'+i[0]+'</a>'}).join(' '), 2)
-  var mask = createElement('div', {
+  }
+  log('解析内容地址完成'+source.map((i)=>{return `<a href="${i[1]}" target="_blank">${i[0]}</a>`}).join(' '), 2)
+  flashBlocker()
+  initPlayer(source, comments, () => delete window[mamaKey] )
+  window[mamaKey] = true
+}
+
+function initPlayer (source, comments, onclosed) {
+    let mask = createElement('div', {
     appendTo: document.body,
     style: {
       position: 'fixed',
@@ -58,7 +87,7 @@ function seeked (source, comments) {
       fontFamily: 'arial, sans-serif'
     }
   })
-  var container = createElement('div', {
+  let container = createElement('div', {
     appendTo: mask,
     innerHTML: '<div id="MAMA2_video_placeHolder"></div>',
     style: {
@@ -91,37 +120,15 @@ function seeked (source, comments) {
       fontWeight: 'bold',
       fontFamily: 'Garamond, "Apple Garamond"',
       cursor: 'pointer'
+    },
+    onclick () {
+      document.body.removeChild(mask)
+      player.video.src = 'about:blank'
+      onclosed();
     }
-  }).onclick = function () {
-    document.body.removeChild(mask)
-    player.video.src = 'about:blank'
-    delete window[mamaKey]
-  }
-  var player = new MAMAPlayer('MAMA2_video_placeHolder', '1000x500', source, comments)
-  player.iframe.contentWindow.focus()
-  flashBlocker()
+  })
+
+  let player = new MAMAPlayer('MAMA2_video_placeHolder', '1000x500', source, comments)
   player.iframe.style.display = 'block'
-  window[mamaKey] = true
-}
-
-var url = purl(location.href)
-if (url.attr('host') === 'zythum.sinaapp.com' && 
-  url.attr('directory') === '/mama2/ps4/' && url.param('url') ) {
-  url = purl(url.param('url'))
-}
-
-seekers.forEach(function (seeker) {
-  if (matched === true) return
-  if (!!seeker.match(url) === true) {
-    log('开始解析内容地址')
-    matched = true
-    seeker.getVideos(url, seeked)   
-  }
-})
-
-if (matched === undefined) {
-  log('尝试使用<a target="_blank" href="http://weibo.com/justashit">一环同学</a>提供的解析服务', 2)
-  flvsp.getVideos(url, seeked)
-}
-
+  player.iframe.contentWindow.focus()
 }
