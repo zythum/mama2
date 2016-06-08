@@ -10,22 +10,48 @@ function pad(num, n) {
 }
 
 function match (url) {
-  return url.attr('host').indexOf('bilibili') >= 0 && /^\/video\/av\d+\/$/.test(url.attr('directory'))
+  return url.attr('host').indexOf('bilibili') >= 0 &&
+    (
+      /^\/video\/av\d+\/$/.test(url.attr('directory')) ||
+      /^\/anime\/v\/\d+$/.test(url.attr('directory'))
+    )
 }
 
 function getVideos (url, callback) {
   log('开始解析bilibli视频地址')
-  let aid = url.attr('directory').match(/^\/video\/av(\d+)\/$/)[1]
-  let page = (()=>{
-    let pageMatch = url.attr('file').match(/^index\_(\d+)\.html$/)
+  let page = (() => {
+    pageMatch = url.attr('file').match(/^index\_(\d+)\.html$/)
     return pageMatch ? pageMatch[1] : 1
   })()
 
+  if (/^\/anime\/v\/\d+$/.test(url.attr('directory'))) {
+    log('开始解析anime地址');
+    let episode_id = url.attr('directory').match(/^\/anime\/v\/(\d+)$/)[1];
+    log('episode_id = ' + episode_id);
+    httpProxy(
+      'http://bangumi.bilibili.com/web_api/episode/get_source',
+      'get',
+      {'episode_id': episode_id},
+      function (res){
+        log('success get aid: ' + res.result.aid);
+        if(res && res.code === 0) {
+          let aid = res.result.aid;
+          extractVideo(aid, page, callback);
+        }
+      });
+  } else {
+    let aid = url.attr('directory').match(/^\/video\/av(\d+)\/$/)[1];
+    extractVideo(aid, page, callback);
+  }
+}
+
+
+function extractVideo (aid, page, callback) {
   httpProxy(
     'http://www.bilibili.com/m/html5',
     'get',
     {aid: aid, page: page, sid: getCookie('sid')},
-  function (rs) {
+  (rs) => {
     if (rs && rs.src) {
       log('获取到<a href="'+rs.src+'">视频地址</a>, 并开始解析bilibli弹幕')
       let source = [ ['bilibili', rs.src] ]
@@ -48,7 +74,7 @@ function getVideos (url, callback) {
         httpProxy(commentSrc, 'get', {}, function (rs) {
           if (rs && rs.i) {
             let comments = [].concat(rs.i.d || [])
-            comments = comments.map(function (comment) {
+            comments = comments.map( (comment) => {
               let p = comment['@p'].split(',')
               switch (p[1] | 0) {
                 case 4:  p[1] = 'bottom'; break
