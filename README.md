@@ -209,4 +209,5 @@ __捐助需谨慎，请详细看完下面的部分再动手投食__
 ![alipay qrcode](http://zythum.github.io/mama2/images/qr.png)
 
 反正也不会有人投食的。哼！
-感谢: k*d, N**l, 覗*, 看***跟, 格调不高
+
+感谢: k\*d, N\*\*l, 覗\*, 看\*\*\*跟, 格调不高
