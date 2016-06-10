@@ -15,7 +15,7 @@ exports.match = function (url) {
   return url.attr('host').indexOf('bilibili') >= 0 && (/^\/video\/av\d+\/$/.test(url.attr('directory')) || /^\/anime\/v\/\d+$/.test(url.attr('directory')));
 }
 
-function extract_video (aid, page, callback) {
+function extract_video (aid, page, callback, outer_cid) {
   httpProxy(
     'http://www.bilibili.com/m/html5',
     'get',
@@ -27,7 +27,12 @@ function extract_video (aid, page, callback) {
 
       var commentSrc = rs.cid
       var cid = commentSrc.split('/')
-      cid = cid[cid.length - 1].split('.')[0]
+      if(outer_cid) {
+        console.log("outer_cid: " + outer_cid);
+        cid = outer_cid;
+      } else {
+        cid = cid[cid.length - 1].split('.')[0]
+      }
 
       httpProxy(
         'http://interface.bilibili.com/playurl',
@@ -91,10 +96,12 @@ exports.getVideos = function (url, callback) {
       'get',
       {'episode_id': episode_id},
       function (res){
-        log('success get aid: ' + res.result.aid);
         if(res && res.code === 0) {
           var aid = res.result.aid;
-          extract_video(aid, page, callback);
+          var cid = res.result.cid;
+          log('success get aid: ' + aid);
+          log('success get cid: ' + cid);
+          extract_video(aid, page, callback, cid);
         }
       });
   } else {
