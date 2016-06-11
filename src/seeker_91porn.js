@@ -1,52 +1,44 @@
-/*  91porn 
+/*  91porn
  *  @Snooze 2015-7-26
  */
-import {canPlayM3U8, ajax, log} from './util/index'
 
-export default {match, getVideos}
+import { ajax, assert } from './util/index'
+export default { match, getVideos }
 
 function match (url) {
   if (window.so && window.so.variables) {
-    var fileId = window.so.variables.file
-    var secCode = window.so.variables.seccode
-    var max_vid = window.so.variables.max_vid
+    let {fileId, secCode, max_vid} = getWebsiteConfig()
     return !!fileId & !!secCode & !!max_vid &
       /view_video\.php\?viewkey/.test( url.attr('source') )
   }
-  return false;
+  return false
 }
 
 function getVideos (url, callback) {
-  //var mediaSpaceHTML = document.getElementById("mediaspace").innerHTML
-  //var fileId = /file','(.*?)'/i.exec(mediaSpaceHTML)[1]
-  //var secCode = /seccode','(.*?)'/i.exec(mediaSpaceHTML)[1]
-  //var max_vid = /max_bid','(.*?)'/i.exec(mediaSpaceHTML)[1]
-  var fileId = window.so.variables.file
-  var secCode = window.so.variables.seccode
-  var max_vid = window.so.variables.max_vid
+  let {VID, secCode, max_vid} = getWebsiteConfig()
+  let ajaxOptions = {
+    url: 'http://www.91porn.com/getfile.php',
+    jsonp: false,
+    param: {
+      VID: VID,
+      seccode: secCode,
+      max_vid: max_vid,
+      mp4: '0'
+    },
+    contentType: 'notJSON'
+  }
+  ajax(ajaxOptions,  (response) => {
+    assert(response != -1 && response.code != -1, '解析91porn视频地址失败')
+    return callback([
+      [ '低清版', response.split('=')[1].split('&')[0] ]
+    ])
+  })
+}
 
-
-  var mp4 = function(callback){
-    ajax({
-      url: 'http://www.91porn.com/getfile.php',
-      jsonp: false,
-      param: {
-        VID: fileId,
-        mp4: '0',
-        seccode: secCode,
-        max_vid: max_vid
-      },
-      contentType: 'notJSON',
-      callback: function(param){
-        if(param == -1 || param.code == -1) return log('解析91porn视频地址失败')
-        mp4Url = param.split('=')[1].split('&')[0]
-        var urls = []
-        urls.push(['低清版', mp4Url])
-        log('解析91porn视频地址成功 ' + urls.map(function (item) {return '<a href='+item[1]+'>'+item[0]+'</a>'}).join(' '), 2)
-        // console.info(urls)
-        return callback(urls);
-      }
-    });
-  };
-  mp4(callback)
+function getWebsiteConfig () {
+  return {
+    fileId:  window.so.variables.file,
+    secCode: window.so.variables.seccode,
+    max_vid: window.so.variables.max_vid
+  }
 }

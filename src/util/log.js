@@ -3,13 +3,12 @@
  *  log, 会在页面和console中输出log
  */
 
-import {createElement} from './createElement'
+import { createElement } from './createElement'
 
 let MAMALogDOM
 let logTimer
-const logDelay = 10000
 
-export function log (msg, delay) {
+export function log (msg, delay = 10) {
   if ( MAMALogDOM === undefined ) {
     MAMALogDOM = createElement('div', {
       style: {
@@ -25,12 +24,15 @@ export function log (msg, delay) {
     })
   }
   clearTimeout(logTimer)
-  
-  MAMALogDOM.innerHTML = '<span style="color:#DF6558">MAMA2 &gt;</span> ' + msg
-  console && console.log && console.log('%c MAMA2 %c %s', 'background:#24272A; color:#ffffff', '', msg)
 
-  document.body.appendChild(MAMALogDOM)
-  logTimer = setTimeout(()=>{
-    document.body.removeChild(MAMALogDOM)
-  }, delay*1000 || logDelay)
+  if(window.console && console.log)
+    console.log('%c MAMA2 %c %s', 'background:#24272A; color:#ffffff', '', msg)
+  document.body.appendChild(MAMALogDOM).innerHTML =
+    '<span style="color:#DF6558">MAMA2 &gt;</span> ' + msg
+  logTimer = setTimeout(() => document.body.removeChild(MAMALogDOM), delay*1000)
+  return msg
+}
+
+export function assert (condition, message) {
+  if (!condition) throw log(message, 2)
 }

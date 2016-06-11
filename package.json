@@ -11,13 +11,9 @@
   "dependencies": {
     "babel-core": "^6.9.1",
     "babel-loader": "^6.2.4",
-    "babel-runtime": "^5.8.0",
     "babel-preset-es2015": "^6.9.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.1"
-  },
-  "babel": {
-    "presets": ["es2015"]
   },
   "bugs": {
     "url": "https://github.com/zythum/mama2/issues"

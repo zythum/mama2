@@ -1,9 +1,10 @@
 /*  tudou
  *  @朱一
  */
-import {canPlayM3U8, ajax, log} from './util/index'
-import {parseYoukuCode} from './seeker_youku'
-export default {match, getVideos}
+
+import { canPlayM3U8, ajax, assert } from './util/index'
+import { parseYoukuCode } from './seeker_youku'
+export default { match, getVideos }
 
 function getId () {
   return window.iid || (window.pageConfig && window.pageConfig.iid) || (window.itemData && window.itemData.iid)
@@ -42,18 +43,15 @@ function m3u8 (id, callback) {
     callback(urls)
   };
   function mp4 (id, callback) {
-    ajax({
+    let ajaxOptions = {
       url: 'http://vr.tudou.com/v2proxy/v2.js',
-      param: {
-        it: id,
-        st: '52%2C53%2C54'
-      },
+      param: { it: id, st: '52%2C53%2C54' },
       jsonp: 'jsonp',
-      callback: (param) => {
-        if(param === -1 || param.code == -1) return log('解析tudou视频地址失败')
-        let urls = [];
-        for(let [index, url] of param.urls) urls.push([index, url]);
-        return callback(urls);
-      }
+    }
+    ajax(ajaxOptions, (param) => {
+      assert(!!param && !!param.code, '解析tudou视频地址失败')
+      let urls = [];
+      for(let [index, url] of param.urls) urls.push([index, url]);
+      return callback(urls);
     });
   };

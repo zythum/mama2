@@ -1,8 +1,8 @@
 /*  youku
  *  @朱一
  */
-import {canPlayM3U8, ajax, log} from './util/index'
-export default {match, getVideos}
+import { canPlayM3U8, ajax, assert } from './util/index'
+export default { match, getVideos }
 
 const dic = [19, 1, 4, 7, 30, 14, 28, 8, 24, 17, 6, 35, 34, 16, 9, 10, 13,
   22, 32, 29, 31, 21, 18, 3, 2, 23, 25, 27, 11, 20, 5, 15, 12, 0, 33, 26]
@@ -12,44 +12,44 @@ let userCache = { a1: '4', a2: '1' }
 
 export function parseYoukuCode (videoId, callback) {
   ajax({
-    url: `http://play.youku.com/play/get.json?vid=${videoId}&ct=12`, jsonp: true,
-    callback: (param) => {
-      if(param == -1) log('解析youku视频地址失败', 2)
-      let data = param.data
+    url: `http://play.youku.com/play/get.json?vid=${videoId}&ct=12`,
+    jsonp: true
+  }, (param) => {
+    assert(param != -1, '解析youku视频地址失败')
+    let data = param.data
 
-      ;[userCache.sid, userCache.token] = rc4(
-        translate(`${mk.a3}o0b${userCache.a1}`, dic).toString(),
-        decode64(data.security.encrypt_string)
-      ).split("_")
+    ;[userCache.sid, userCache.token] = rc4(
+      translate(`${mk.a3}o0b${userCache.a1}`, dic).toString(),
+      decode64(data.security.encrypt_string)
+    ).split("_")
 
-      if ( canPlayM3U8 ) {
-        let urlquery = {
-          vid: window.videoId,
-          type: '[[type]]',
-          ts: parseInt((new Date).getTime() / 1e3),
-          keyframe: 0,
-          ep: encodeURIComponent(encode64(rc4(
-            translate(`${mk.a4}poz${userCache.a2}`, dic).toString(),
-            `${userCache.sid}_${videoId}_${userCache.token}`
-          ))),
-          sid: userCache.sid,
-          token: userCache.token,
-          ctype: 12,
-          ev: 1,
-          oip: data.security.ip,
-          client_id: 'youkumobileplaypage'
-        }
-
-        let videoSource = 'http://pl.youku.com/playlist/m3u8?' + urlParameter(urlquery);
-        callback([
-          ['超清', videoSource.replace('[[type]]', 'hd2')],
-          ['高清', videoSource.replace('[[type]]', 'mp4')],
-          ['标清', videoSource.replace('[[type]]', 'flv')]
-        ])
-      } else {
-        let playListData = new PlayListData(data, data.stream, 'mp4')
-        callback([['标清', playListData._videoSegsDic.streams['guoyu']['3gphd'][0].src]])
+    if ( canPlayM3U8 ) {
+      let urlquery = {
+        vid: window.videoId,
+        type: '[[type]]',
+        ts: parseInt((new Date).getTime() / 1e3),
+        keyframe: 0,
+        ep: encodeURIComponent(encode64(rc4(
+          translate(`${mk.a4}poz${userCache.a2}`, dic).toString(),
+          `${userCache.sid}_${videoId}_${userCache.token}`
+        ))),
+        sid: userCache.sid,
+        token: userCache.token,
+        ctype: 12,
+        ev: 1,
+        oip: data.security.ip,
+        client_id: 'youkumobileplaypage'
       }
+
+      let videoSource = 'http://pl.youku.com/playlist/m3u8?' + urlParameter(urlquery);
+      callback([
+        ['超清', videoSource.replace('[[type]]', 'hd2')],
+        ['高清', videoSource.replace('[[type]]', 'mp4')],
+        ['标清', videoSource.replace('[[type]]', 'flv')]
+      ])
+    } else {
+      let playListData = new PlayListData(data, data.stream, 'mp4')
+      callback([['标清', playListData._videoSegsDic.streams['guoyu']['3gphd'][0].src]])
     }
   })
 }
@@ -246,133 +246,36 @@ RandomProxy.prototype = {
   convertType: function(a) {
     var b = a;
     switch (a) {
-      case "m3u8":
-        b = "mp4";
-        break;
-      case "3gphd":
-        b = "3gphd";
-        break;
-      case "flv":
-        b = "flv";
-        break;
-      case "flvhd":
-        b = "flv";
-        break;
-      case "mp4hd":
-        b = "mp4";
-        break;
-      case "mp4hd2":
-        b = "hd2";
-        break;
-      case "mp4hd3":
-        b = "hd3"
+      case "m3u8":   b = "mp4";   break
+      case "3gphd":  b = "3gphd"; break
+      case "flv":    b = "flv";   break
+      case "flvhd":  b = "flv";   break
+      case "mp4hd":  b = "mp4";   break
+      case "mp4hd2": b = "hd2";   break
+      case "mp4hd3": b = "hd3"
     }
     return b
   },
   langCodeToCN: function(a) {
     var b = "";
     switch (a) {
-      case "default":
-        b = {
-          key: "guoyu",
-          value: "国语"
-        };
-        break;
-      case "guoyu":
-        b = {
-          key: "guoyu",
-          value: "国语"
-        };
-        break;
-      case "yue":
-        b = {
-          key: "yue",
-          value: "粤语"
-        };
-        break;
-      case "chuan":
-        b = {
-          key: "chuan",
-          value: "川话"
-        };
-        break;
-      case "tai":
-        b = {
-          key: "tai",
-          value: "台湾"
-        };
-        break;
-      case "min":
-        b = {
-          key: "min",
-          value: "闽南"
-        };
-        break;
-      case "en":
-        b = {
-          key: "en",
-          value: "英语"
-        };
-        break;
-      case "ja":
-        b = {
-          key: "ja",
-          value: "日语"
-        };
-        break;
-      case "kr":
-        b = {
-          key: "kr",
-          value: "韩语"
-        };
-        break;
-      case "in":
-        b = {
-          key: "in",
-          value: "印度"
-        };
-        break;
-      case "ru":
-        b = {
-          key: "ru",
-          value: "俄语"
-        };
-        break;
-      case "fr":
-        b = {
-          key: "fr",
-          value: "法语"
-        };
-        break;
-      case "de":
-        b = {
-          key: "de",
-          value: "德语"
-        };
-        break;
-      case "it":
-        b = {
-          key: "it",
-          value: "意语"
-        };
-        break;
-      case "es":
-        b = {
-          key: "es",
-          value: "西语"
-        };
-        break;
-      case "po":
-        b = {
-          key: "po",
-          value: "葡语"
-        };
-        break;
-      case "th":
-        b = {
-          key: "th",
-          value: "泰语"
-        }
+      case "default": b = {key: "guoyu", value: "国语"}; break
+      case "guoyu":   b = {key: "guoyu", value: "国语"}; break
+      case "yue":     b = {key: "yue",   value: "粤语"}; break
+      case "chuan":   b = {key: "chuan", value: "川话"}; break
+      case "tai":     b = {key: "tai",   value: "台湾"}; break
+      case "min":     b = {key: "min",   value: "闽南"}; break
+      case "en":      b = {key: "en",    value: "英语"}; break
+      case "ja":      b = {key: "ja",    value: "日语"}; break
+      case "kr":      b = {key: "kr",    value: "韩语"}; break
+      case "in":      b = {key: "in",    value: "印度"}; break
+      case "ru":      b = {key: "ru",    value: "俄语"}; break
+      case "fr":      b = {key: "fr",    value: "法语"}; break
+      case "de":      b = {key: "de",    value: "德语"}; break
+      case "it":      b = {key: "it",    value: "意语"}; break
+      case "es":      b = {key: "es",    value: "西语"}; break
+      case "po":      b = {key: "po",    value: "葡语"}; break
+      case "th":      b = {key: "th",    value: "泰语"}
     }
     return b
   },
@@ -381,25 +284,8 @@ RandomProxy.prototype = {
       i = c.video.encodeid;
     if (!i || !d)
       return "";
-    var j = {
-        flv: 0,
-        flvhd: 0,
-        mp4: 1,
-        hd2: 2,
-        "3gphd": 1,
-        "3gp": 0
-      },
-      k = j[d],
-      l = {
-        flv: "flv",
-        mp4: "mp4",
-        hd2: "flv",
-        mp4hd: "mp4",
-        mp4hd2: "mp4",
-        "3gphd": "mp4",
-        "3gp": "flv",
-        flvhd: "flv"
-      },
+    var j = {flv: 0, flvhd: 0, mp4: 1, hd2: 2, "3gphd": 1, "3gp": 0 }, k = j[d],
+      l = {flv: "flv", mp4: "mp4", hd2: "flv", mp4hd: "mp4", mp4hd2: "mp4", "3gphd": "mp4", "3gp": "flv", flvhd: "flv"},
       m = l[d],
       n = b.toString(16);
     1 == n.length && (n = "0" + n);

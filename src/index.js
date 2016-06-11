@@ -39,7 +39,7 @@ function seeked (source, comments) {
     delete window[mamaKey]
     return
   }
-  log('解析内容地址完成'+source.map((i)=>{return `<a href="${i[1]}" target="_blank">${i[0]}</a>`}).join(' '), 2)
+  log('解析内容地址完成'+source.map( i => `<a href="${i[1]}" target="_blank">${i[0]}</a>`).join(' '), 2)
   flashBlocker()
   initPlayer(source, comments, () => delete window[mamaKey] )
   window[mamaKey] = true
