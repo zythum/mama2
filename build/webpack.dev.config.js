@@ -18,11 +18,7 @@ module.exports = {
     noParse: [ /player\.js$/ ]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: {
-        except: ['$super', '$', 'exports', 'require']
-      }
-    }),
+    new webpack.optimize.UglifyJsPlugin(),
     new Chinese2unicodePlugin()
   ],
   devtool: 'source-map'

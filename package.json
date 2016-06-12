@@ -21,7 +21,7 @@
   "homepage": "https://github.com/zythum/mama2",
   "scripts": {
     "start": "npm run dev & npm run httpserver",
-    "dev": "sudo webpack --watch --progress --colors --profile --config ./build/webpack.dev.config.js",
+    "dev": "sudo webpack --watch --progress --config ./build/webpack.dev.config.js",
     "httpserver": "sudo webpack-dev-server --content-base ./ --host 127.0.0.1 --port 8000"
   }
 }
