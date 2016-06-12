@@ -88,20 +88,22 @@ function getComments (commentSrc, callback) {
   httpProxy(commentsHttpProxyOptions, (response) => {
     if (!response || !response.i) return callback(false)
 
-    let comments = [].concat(response.i.d || []).map( (comment) => {
-      let p = comment['@p'].split(',')
-      switch (p[1] | 0) {
-        case 4:  p[1] = 'bottom'; break
-        case 5:  p[1] = 'top';    break
-        default: p[1] = 'loop'
-      }
-      return {
-        time: parseFloat(p[0]),
-        pos:  p[1],
-        color: '#' + pad((p[3] | 0).toString(16), 6),
-        text: comment['#text']
-      }
-    }).sort( (a, b) => a.time - b.time )
+    let comments = [].concat(response.i.d || [])
+      .map( (comment) => {
+        let p = comment['@p'].split(',')
+        switch (p[1] | 0) {
+          case 4:  p[1] = 'bottom'; break
+          case 5:  p[1] = 'top';    break
+          default: p[1] = 'loop'
+        }
+        return {
+          time: parseFloat(p[0]),
+          pos:  p[1],
+          color: '#' + pad((p[3] | 0).toString(16), 6),
+          text: comment['#text']
+        }
+      })
+      .sort( (a, b) => a.time - b.time )
     callback(comments)
   })
 }
