@@ -56,4 +56,12 @@ function mp4(vid, uid, callback) {
   ajax(ajaxOptions, (param) => callback([['高清', param.data.url_high_mp4]]) )
 }
 
-function shift_en (i) {var t = i.length, e = 0; return this.replace(/[0-9a-zA-Z]/g, function(s) {var a = s.charCodeAt(0), n = 65, o = 26; a >= 97 ? n = 97 : 65 > a && (n = 48, o = 10); var r = a - n; return String.fromCharCode((r + i[e++%t])%o + n) }) }
+function shift_en (i) {
+  let t = i.length, e = 0
+  return this.replace(/[0-9a-zA-Z]/g, (s) => {
+    let a = s.charCodeAt(0), n = 65, o = 26
+    a >= 97 ? n = 97 : 65 > a && (n = 48, o = 10)
+    let r = a - n
+    return String.fromCharCode((r + i[e++ % t]) % o + n)
+  })
+}

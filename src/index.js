@@ -9,7 +9,7 @@ import {
   purl
 } from './util/index'
 
-if (window[mamaKey] = true) {
+if (window[mamaKey] !== true) {
   let matched
   let url = purl(location.href)
   if (url.attr('host') === 'zythum.sinaapp.com' &&
@@ -39,7 +39,7 @@ function seeked (source, comments) {
     delete window[mamaKey]
     return
   }
-  log('解析内容地址完成'+source.map( i => `<a href="${i[1]}" target="_blank">${i[0]}</a>`).join(' '), 2)
+  log('解析内容地址完成\n' + source.map( _source => `[${_source[0]}](${_source[1]})`).join(' \n'), 2)
   flashBlocker()
   initPlayer(source, comments, () => delete window[mamaKey] )
   window[mamaKey] = true
