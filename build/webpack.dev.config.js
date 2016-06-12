@@ -1,10 +1,11 @@
 var path = require('path')
 var webpack = require('webpack')
+var Chinese2unicodePlugin = require('./webpack-plugin-chinese2unicode')
 
 module.exports = {
   entry: ['./src/index'],
   output: {
-    path: path.resolve(__dirname, './dest'),
+    path: './dest',
     filename: 'index.js'
   },
   module: {
@@ -21,7 +22,8 @@ module.exports = {
       mangle: {
         except: ['$super', '$', 'exports', 'require']
       }
-    })
+    }),
+    new Chinese2unicodePlugin()
   ],
   devtool: 'source-map'
 }

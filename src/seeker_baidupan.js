@@ -74,7 +74,7 @@ function getFilePath (url) {
 }
 
 //get from baidupan source
-function encodeBase64(G) {
+function encodeBase64 (G) {
   let C = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
     B, A, _, F, D, E;
   _ = G.length;

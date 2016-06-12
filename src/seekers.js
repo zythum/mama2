@@ -1,6 +1,6 @@
 export { default as seeker_youku }     from './seeker_youku'
 export { default as seeker_bilibili }  from './seeker_bilibili'
-// export { default as seeker_tudou }     from './seeker_tudou'
+export { default as seeker_tudou }     from './seeker_tudou'
 export { default as seeker_iqiyi }     from './seeker_iqiyi'
 export { default as seeker_hunantv }   from './seeker_hunantv'
 export { default as seeker_baidupan }  from './seeker_baidupan'
