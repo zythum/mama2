@@ -6,7 +6,7 @@ export default { match, getVideos }
 
 const dic = [19, 1, 4, 7, 30, 14, 28, 8, 24, 17, 6, 35, 34, 16, 9, 10, 13,
   22, 32, 29, 31, 21, 18, 3, 2, 23, 25, 27, 11, 20, 5, 15, 12, 0, 33, 26]
-const mk = {a3: 'b4et', a4: 'boa4'}
+const mk = { a3: 'b4et', a4: 'boa4' }
 
 let userCache = { a1: '4', a2: '1' }
 
