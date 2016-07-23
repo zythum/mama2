@@ -3,7 +3,7 @@ var createElement = require('./createElement')
 var MAMAPlayer    = require('./player')
 var log           = require('./log')
 var purl          = require('./purl')
-var mamaKey       = require('./mamaKey')
+var mamaKey       = require('./mamakey')
 var seekers       = require('./seekers')
 var flvsp         = require('./seeker_flvsp');
 var matched
