@@ -8,7 +8,7 @@ var ajax = require('./ajax')
 var httpProxy = require('./httpProxy')
 
 exports.match = function () {
-  return /^http\:\/\/www\.panda\.tv\/[0-9]+$/.test(location.href)
+  return /^http\:\/\/www\.panda\.tv\/(([0-9]+$)|(lpl$)|(act\/.*))/.test(location.href)
 }
 
 exports.getVideos = function (url, callback) {
