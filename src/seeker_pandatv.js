@@ -18,7 +18,7 @@ exports.getVideos = function (url, callback) {
     return;
   }
 
-  var room_id = url.attr('path').match(/^\/([0-9]+)$/)[1]
+  var room_id = window.PDR.getRoomId()
   var m3u8_api = 'http://room.api.m.panda.tv/index.php?method=room.shareapi&roomid='
   httpProxy(
         m3u8_api + room_id,
