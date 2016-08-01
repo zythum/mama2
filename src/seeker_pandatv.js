@@ -8,7 +8,7 @@ var ajax = require('./ajax')
 var httpProxy = require('./httpProxy')
 
 exports.match = function () {
-  return /^http\:\/\/www\.panda\.tv\/[0-9]+$/.test(location.href)
+  return url.attr('host').indexOf('panda') >= 0 && window.PDR && window.PDR.getRoomId() !== ''
 }
 
 exports.getVideos = function (url, callback) {
@@ -18,7 +18,7 @@ exports.getVideos = function (url, callback) {
     return;
   }
 
-  var room_id = url.attr('path').match(/^\/([0-9]+)$/)[1]
+  var room_id = window.PDR.getRoomId()
   var m3u8_api = 'http://room.api.m.panda.tv/index.php?method=room.shareapi&roomid='
   httpProxy(
         m3u8_api + room_id,
