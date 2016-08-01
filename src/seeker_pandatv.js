@@ -7,7 +7,7 @@ var canPlayM3U8 = require('./canPlayM3U8')
 var ajax = require('./ajax')
 var httpProxy = require('./httpProxy')
 
-exports.match = function () {
+exports.match = function (url) {
   return url.attr('host').indexOf('panda') >= 0 && window.PDR && window.PDR.getRoomId() !== ''
 }
 
