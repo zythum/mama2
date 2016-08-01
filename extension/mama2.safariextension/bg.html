@@ -8,7 +8,7 @@
 	<script type="text/javascript">
 	safari.application.addEventListener("command", function (e) {
 		if(e.command == 'MAMA2'){
-			safari.application.activeBrowserWindow.activeTab.page.dispatchMessage('MAMA2');
+			safari.application.activeBrowserWindow.activeTab.page.dispatchMessage('MAMA2',safari.extension.settings.serverURL);
 		}
 	}, false);
 	</script>
