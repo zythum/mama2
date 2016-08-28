@@ -17,13 +17,14 @@ function urlParameter (query) {
 }
 
 exports.match = function (url) {
-  return /v\.youku\.com/.test(url.attr('host')) && !!window.videoId
+  return /v\.youku\.com/.test(url.attr('host')) // && !!window.videoId
 }
 exports.parseYoukuCode = function (videoId, callback) {
   ajax({
     url: 'http://play.youku.com/play/get.json?vid=' + videoId + '&ct=12', jsonp: true,
     callback: function (param) {
       if(param == -1) log('解析youku视频地址失败', 2)
+      var vid = videoId;
       var data = param.data;            
       
       var sid_token = rc4(translate(mk.a3 + "o0b" + userCache.a1, dic).toString(), decode64(data.security.encrypt_string)).split("_");
@@ -32,7 +33,7 @@ exports.parseYoukuCode = function (videoId, callback) {
 
       if ( canPlayM3U8 ) {
         var urlquery = {
-          vid: window.videoId,
+          vid:vid,
           type: '[[type]]',
           ts: parseInt((new Date).getTime() / 1e3),
           keyframe: 0,
@@ -60,7 +61,8 @@ exports.parseYoukuCode = function (videoId, callback) {
   })
 }
 exports.getVideos = function (url, callback) {
-  exports.parseYoukuCode(window.videoId, callback)
+  var vid = url.attr("file").match(/id_(\S+)\.html/)[1];
+  exports.parseYoukuCode(vid, callback)
 }
 
 //优酷自己加密算法
