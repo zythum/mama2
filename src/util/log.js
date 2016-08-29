@@ -25,12 +25,13 @@ let iframeLogger = (() => {
     '<style>'+
       '*{margin:0;padding:0;font-family:"PingHei","Lucida Grande","Lucida Sans Unicode","STHeiti","Helvetica","Arial","Verdana","sans-serif"}'+
       'body{padding:0 20px;background:#24272A;color:#ffffff;font-size:14px;white-space:nowrap;line-height:30px;}'+
+      'a{color:inherit;}'+
     '</style>'
 
   let logFrame
   function initLogFrame () {
     logFrame = document.createElement('iframe')
-    logFrame.src = 'about:blank;'
+    logFrame.src = 'about:blank'
     logFrame.style.cssText = iframeStyle
   }
 

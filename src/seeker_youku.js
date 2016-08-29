@@ -25,7 +25,7 @@ export function parseYoukuCode (videoId, callback) {
 
     if ( canPlayM3U8 ) {
       let urlquery = {
-        vid: window.videoId,
+        vid: videoId,
         type: '[[type]]',
         ts: parseInt((new Date).getTime() / 1e3),
         keyframe: 0,
@@ -55,11 +55,11 @@ export function parseYoukuCode (videoId, callback) {
 }
 
 function match (url) {
-  return /v\.youku\.com/.test(url.attr('host')) && !!window.videoId
+  return /v\.youku\.com/.test(url.attr('host')) && !!PageConfig.videoId
 }
 
 function getVideos (url, callback) {
-  exports.parseYoukuCode(window.videoId, callback)
+  exports.parseYoukuCode(PageConfig.videoId, callback)
 }
 
 function urlParameter (query) {
@@ -256,29 +256,7 @@ RandomProxy.prototype = {
     }
     return b
   },
-  langCodeToCN: function(a) {
-    var b = "";
-    switch (a) {
-      case "default": b = {key: "guoyu", value: "国语"}; break
-      case "guoyu":   b = {key: "guoyu", value: "国语"}; break
-      case "yue":     b = {key: "yue",   value: "粤语"}; break
-      case "chuan":   b = {key: "chuan", value: "川话"}; break
-      case "tai":     b = {key: "tai",   value: "台湾"}; break
-      case "min":     b = {key: "min",   value: "闽南"}; break
-      case "en":      b = {key: "en",    value: "英语"}; break
-      case "ja":      b = {key: "ja",    value: "日语"}; break
-      case "kr":      b = {key: "kr",    value: "韩语"}; break
-      case "in":      b = {key: "in",    value: "印度"}; break
-      case "ru":      b = {key: "ru",    value: "俄语"}; break
-      case "fr":      b = {key: "fr",    value: "法语"}; break
-      case "de":      b = {key: "de",    value: "德语"}; break
-      case "it":      b = {key: "it",    value: "意语"}; break
-      case "es":      b = {key: "es",    value: "西语"}; break
-      case "po":      b = {key: "po",    value: "葡语"}; break
-      case "th":      b = {key: "th",    value: "泰语"}
-    }
-    return b
-  },
+  langCodeToCN: function(a) { return {} },
   getVideoSrc: function(a, b, c, d, e, f, g) {
     var h = c.stream[a],
       i = c.video.encodeid;
