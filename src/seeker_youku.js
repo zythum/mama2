@@ -4,7 +4,7 @@
 var canPlayM3U8 = require('./canPlayM3U8')
 var ajax        = require('./ajax')
 var log         = require('./log')
-
+var videoId     = window.videoId || window.PageConfig.currentEncodeVid;
 
 var dic = [19, 1, 4, 7, 30, 14, 28, 8, 24, 17, 6, 35, 34, 16, 9, 10, 13, 22, 32, 29, 31, 21, 18, 3, 2, 23, 25, 27, 11, 20, 5, 15, 12, 0, 33, 26]
 var mk = {a3: 'b4et', a4: 'boa4'}
@@ -17,7 +17,7 @@ function urlParameter (query) {
 }
 
 exports.match = function (url) {
-  return /v\.youku\.com/.test(url.attr('host')) && !!window.PageConfig.currentEncodeVid
+  return /v\.youku\.com/.test(url.attr('host')) && !!videoId
 }
 exports.parseYoukuCode = function (videoId, callback) {
   ajax({
@@ -32,7 +32,7 @@ exports.parseYoukuCode = function (videoId, callback) {
 
       if ( canPlayM3U8 ) {
         var urlquery = {
-          vid: window.PageConfig.currentEncodeVid,
+          vid: videoId,
           type: '[[type]]',
           ts: parseInt((new Date).getTime() / 1e3),
           keyframe: 0,
@@ -60,7 +60,7 @@ exports.parseYoukuCode = function (videoId, callback) {
   })
 }
 exports.getVideos = function (url, callback) {
-  exports.parseYoukuCode(window.PageConfig.currentEncodeVid, callback)
+  exports.parseYoukuCode(videoId, callback)
 }
 
 //优酷自己加密算法
