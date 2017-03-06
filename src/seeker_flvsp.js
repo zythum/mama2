@@ -11,7 +11,7 @@ exports.match = function (url) {
 
 exports.getVideos = function (url, callback) {
   ajax({
-    url: 'http://acfunfix.sinaapp.com/mama.php',
+    url: '//acfunfix.sinaapp.com/mama.php',
     jsonp: true,
     param: {
       url: url.attr('source')
