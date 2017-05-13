@@ -8,7 +8,8 @@ var ajax = require('./ajax')
 var httpProxy = require('./httpProxy')
 
 exports.match = function () {
-  return /^http\:\/\/www\.panda\.tv\/[0-9]+$/.test(location.href)
+  // 调整url匹配 by @monotone
+  return /^http\:\/\/www\.panda\.tv\/.*/.test(location.href)
 }
 
 exports.getVideos = function (url, callback) {
@@ -18,7 +19,24 @@ exports.getVideos = function (url, callback) {
     return;
   }
 
-  var room_id = url.attr('path').match(/^\/([0-9]+)$/)[1]
+  /* 获取房间 ID 号
+   * 
+   * 2017年05月13日 by @monotone
+   */
+  var roomContainer = document.getElementById('dva-room-container');
+  if(roomContainer == null){
+    log('找不到视频容器。')
+    return;
+  }
+  var room_id = null;
+  var divs = roomContainer.getElementsByTagName('DIV');
+  for (var i = divs.length - 1; i >= 0; i--) {
+    room_id = divs[i].getAttribute('data-room-id');
+    if(room_id != null){
+      break;
+    }
+  }
+
   var m3u8_api = 'http://room.api.m.panda.tv/index.php?method=room.shareapi&roomid='
   httpProxy(
         m3u8_api + room_id,
