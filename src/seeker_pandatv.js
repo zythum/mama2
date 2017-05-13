@@ -12,6 +12,15 @@ exports.match = function () {
   return /^http\:\/\/www\.panda\.tv\/.*/.test(location.href)
 }
 
+function GetQueryString(name)
+{
+  var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+  var r = window.location.search.substr(1).match(reg);
+  if(r!=null)
+    return  unescape(r[2]);
+  return null;
+}
+
 exports.getVideos = function (url, callback) {
   if(!canPlayM3U8){
     log('use safari please')
@@ -19,23 +28,35 @@ exports.getVideos = function (url, callback) {
     return;
   }
 
-  /* 获取房间 ID 号
+  var room_id = url.attr('path').match(/^\/([0-9]+)$/)[1]
+
+  /* 其他 URL 格式获取房间 ID 号
    * 
    * 2017年05月13日 by @monotone
    */
-  var roomContainer = document.getElementById('dva-room-container');
-  if(roomContainer == null){
-    log('找不到视频容器。')
-    return;
-  }
-  var room_id = null;
-  var divs = roomContainer.getElementsByTagName('DIV');
-  for (var i = divs.length - 1; i >= 0; i--) {
-    room_id = divs[i].getAttribute('data-room-id');
-    if(room_id != null){
-      break;
+
+  // query参数中获取
+  if(room_id == null){
+    room_id = GetQueryString('roomid');
+  } 
+
+  // 从源码中获取
+  if(room_id == null){
+    var roomContainer = document.getElementById('dva-room-container');
+    if(roomContainer == null){
+      log('找不到视频容器。')
+      return;
+    }
+    var room_id = null;
+    var divs = roomContainer.getElementsByTagName('DIV');
+    for (var i = divs.length - 1; i >= 0; i--) {
+      room_id = divs[i].getAttribute('data-room-id');
+      if(room_id != null){
+        break;
+      }
     }
   }
+
 
   var m3u8_api = 'http://room.api.m.panda.tv/index.php?method=room.shareapi&roomid='
   httpProxy(
