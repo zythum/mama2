@@ -1,6 +1,6 @@
-#妈妈再也不用担心我的 MacBook 发热了计划2
+# 妈妈再也不用担心我的 MacBook 发热了计划2
 
-> 妈妈计划用于解决在看视频网站时 MacBook 发热严重的问题。使用video来替换原来的flash播放器。
+> 妈妈计划用于解决在看视频网站时 MacBook 发热严重的问题。使用 video 来替换原来的 flash 播放器。
 
 [具体查看这里 http://zythum.github.io/mama2/](http://zythum.github.io/mama2/)
 
@@ -24,20 +24,20 @@ __目前鹅厂视频－－腾讯视频已经原生支持 Video 播放了。大�
 
 
 
-##众人拾柴火焰高 计划
-> 加入妈妈计划开发，视频网站的解析朱一一个人确实是搞不过来。每个视频网站的解析规则可能会不定时的改变。朱一每天也就看看优酷或者bilibili，不大可能照顾到所有网站（毕竟是个业余项目QAQ）。所以如果你觉得妈妈计划不错，想帮助妈妈计划做的更好，恳请您加入*众人拾柴火焰高*计划。
+## 众人拾柴火焰高 计划
+> 加入妈妈计划开发，视频网站的解析朱一一个人确实是搞不过来。每个视频网站的解析规则可能会不定时的改变。朱一每天也就看看优酷或者 bilibili，不大可能照顾到所有网站（毕竟是个业余项目 QAQ）。所以如果你觉得妈妈计划不错，想帮助妈妈计划做的更好，恳请您加入*众人拾柴火焰高*计划。
 
-###搭建本地环境
+### 搭建本地环境
 
 [具体查看这里 http://zythum.github.io/mama2/](http://zythum.github.io/mama2/)
 
-MAMA2需要本地环境: `node` `npm` `gulp`
+MAMA2 需要本地环境: `node` `npm` `gulp`
 
-clone到本地后执行: `$ npm install`
+clone 到本地后执行: `$ npm install`
 
 然后执行: `$ npm start` 或者 `$ gulp`
 
-本地启动的httpServer默认为 `http://localhost:8000`
+本地启动的 httpServer 默认为 `http://localhost:8000`
 
 那么本地环境就搭建好了。
 
@@ -45,7 +45,7 @@ clone到本地后执行: `$ npm install`
 
 开发使用收藏夹脚本:[拖拽我到收藏夹](javascript:void\(function\(u,s\){s=document.body.appendChild\(document.createElement\('script'\)\);s.src=u+'?ts='+Date.now\(\);s.charset='UTF-8'}\('http://localhost:8000/dest/index.js'\)\))
 
-###开发说明
+### 开发说明
 
 现在的目录结构是这样的
 
@@ -55,11 +55,11 @@ clone到本地后执行: `$ npm install`
 
 其实一般只需要编写用于获取视频地址的逻辑，我这边称为`seeker`。所以只需要注意 `seeker-` 打头的文件，和 `seekers` 的文件就可以了
 
-###举个例子🌰
-我们要为名为 `example` 的视频网站写seeker脚本
+### 举个例子 🌰
+我们要为名为 `example` 的视频网站写 seeker 脚本
 
 
-在src目录下创建 seeker_example.js 文件。
+在 src 目录下创建 seeker_example.js 文件。
 
 我已经创建好了。文件是这样的
 
@@ -174,14 +174,14 @@ module.exports = [
 
 大功告成！用浏览器上的开发用收藏夹脚本测试下。
 
-如果测试ok的话, 那么把代码pull request给朱一吧。
+如果测试 ok 的话, 那么把代码 pull request 给朱一吧。
 
-不方便pull request？
+不方便 pull request？
 
-那么用email给朱一也是可以的 zythum02@gmail.com
+那么用 email 给朱一也是可以的: `zythum02#gmail.com`
 
 
-##License##
+## License
 
 MAMA2 is under the MIT License.
 
